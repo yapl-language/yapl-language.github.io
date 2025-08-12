@@ -1,185 +1,361 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>YAPL — Yet Another Prompt Language</title>
-  <meta name="description" content="YAPL is a tiny, composable prompt templating language with blocks, traits, and variables — designed for AI agents." />
-  <meta property="og:title" content="YAPL — Yet Another Prompt Language" />
-  <meta property="og:description" content="Blocks, traits, variables. Markdown-first. Built for AI agents." />
-  <meta property="og:type" content="website" />
-  <meta name="theme-color" content="#f472b6" />
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>YAPL — Yet Another Prompt Language</title>
+    <meta
+      name="description"
+      content="YAPL is a tiny, composable prompt templating language with blocks, traits, and variables — designed for AI agents."
+    />
+    <meta property="og:title" content="YAPL — Yet Another Prompt Language" />
+    <meta
+      property="og:description"
+      content="Blocks, traits, variables. Markdown-first. Built for AI agents."
+    />
+    <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#f472b6" />
 
-  <!-- Favicon: inline SVG YAPL badge -->
-  <link rel="icon"
-        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='128' viewBox='0 0 128 128'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%23f472b6'/%3E%3Cstop offset='1' stop-color='%23ec4899'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect rx='28' ry='28' width='128' height='128' fill='url(%23g)'/%3E%3Ctext x='64' y='86' text-anchor='middle' font-size='72' font-family='Inter,Arial,Helvetica,sans-serif' fill='white' font-weight='900'%3EY%3C/text%3E%3C/svg%3E" />
+    <!-- Favicon: inline SVG YAPL badge -->
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='128' viewBox='0 0 128 128'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%23f472b6'/%3E%3Cstop offset='1' stop-color='%23ec4899'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect rx='28' ry='28' width='128' height='128' fill='url(%23g)'/%3E%3Ctext x='64' y='86' text-anchor='middle' font-size='72' font-family='Inter,Arial,Helvetica,sans-serif' fill='white' font-weight='900'%3EY%3C/text%3E%3C/svg%3E"
+    />
 
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet" />
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
 
-  <!-- Tailwind (CDN) -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            brand: {
-              50:  '#fff1f8',
-              100: '#ffe4f1',
-              200: '#fec7e3',
-              300: '#fea3d1',
-              400: '#fc77bb',
-              500: '#f472b6',
-              600: '#e11d48',
-              700: '#be185d',
-              800: '#9d174d',
-              900: '#831843'
-            }
+    <!-- Tailwind (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                50: "#fff1f8",
+                100: "#ffe4f1",
+                200: "#fec7e3",
+                300: "#fea3d1",
+                400: "#fc77bb",
+                500: "#f472b6",
+                600: "#e11d48",
+                700: "#be185d",
+                800: "#9d174d",
+                900: "#831843",
+              },
+            },
+            boxShadow: {
+              glow: "0 0 0 3px rgba(244,114,182,0.25), 0 20px 50px -20px rgba(244,114,182,0.45)",
+            },
+            fontFamily: {
+              sans: ["Inter", "ui-sans-serif", "system-ui"],
+              mono: [
+                "JetBrains Mono",
+                "ui-monospace",
+                "SFMono-Regular",
+                "Menlo",
+                "monospace",
+              ],
+            },
           },
-          boxShadow: {
-            'glow': '0 0 0 3px rgba(244,114,182,0.25), 0 20px 50px -20px rgba(244,114,182,0.45)'
-          },
-          fontFamily: {
-            sans: ['Inter', 'ui-sans-serif', 'system-ui'],
-            mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace']
-          }
-        }
+        },
+      };
+    </script>
+
+    <!-- Prism for code highlighting -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/prismjs@1.29.0/themes/prism-tomorrow.min.css"
+    />
+    <script
+      defer
+      src="https://unpkg.com/prismjs@1.29.0/components/prism-core.min.js"
+    ></script>
+    <script
+      defer
+      src="https://unpkg.com/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"
+    ></script>
+
+    <style>
+      ::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
       }
-    }
-  </script>
+      ::-webkit-scrollbar-thumb {
+        background: linear-gradient(180deg, #fc77bb, #be185d);
+        border-radius: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .anchor {
+        opacity: 0;
+        transition: opacity 0.2s ease;
+        margin-left: 0.375rem;
+      }
+      h2:hover .anchor,
+      h3:hover .anchor {
+        opacity: 1;
+      }
+      .blob {
+        filter: blur(60px);
+        opacity: 0.35;
+      }
+      .btn {
+        border-radius: 0.75rem;
+        padding: 0.75rem 1.25rem;
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+    </style>
+  </head>
 
-  <!-- Prism for code highlighting -->
-  <link rel="stylesheet" href="https://unpkg.com/prismjs@1.29.0/themes/prism-tomorrow.min.css" />
-  <script defer src="https://unpkg.com/prismjs@1.29.0/components/prism-core.min.js"></script>
-  <script defer src="https://unpkg.com/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  <body
+    class="bg-white text-gray-800 dark:bg-gray-950 dark:text-gray-100 antialiased"
+  >
+    <!-- Toast -->
+    <div
+      id="toast"
+      class="fixed top-4 left-1/2 -translate-x-1/2 z-[100] hidden"
+    >
+      <span
+        class="px-4 py-2 rounded-full bg-gray-900 text-white text-sm shadow-glow dark:bg-gray-800"
+        >Copied!</span
+      >
+    </div>
 
-  <style>
-    ::-webkit-scrollbar { width: 10px; height: 10px; }
-    ::-webkit-scrollbar-thumb { background: linear-gradient(180deg,#fc77bb,#be185d); border-radius: 8px; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    .anchor { opacity: 0; transition: opacity .2s ease; margin-left: .375rem; }
-    h2:hover .anchor, h3:hover .anchor { opacity: 1; }
-    .blob { filter: blur(60px); opacity:.35; }
-    .btn { border-radius: 0.75rem; padding: 0.75rem 1.25rem; font-weight: 600; font-size: 0.9rem; }
-  </style>
-</head>
+    <!-- Decorative blobs -->
+    <div class="pointer-events-none fixed inset-0 -z-10">
+      <div
+        class="absolute -top-24 -left-16 w-[28rem] h-[28rem] bg-gradient-to-br from-brand-400 via-rose-500 to-fuchsia-500 rounded-full blob"
+      ></div>
+      <div
+        class="absolute -bottom-24 -right-16 w-[28rem] h-[28rem] bg-gradient-to-tr from-fuchsia-500 via-brand-500 to-purple-500 rounded-full blob"
+      ></div>
+    </div>
 
-<body class="bg-white text-gray-800 dark:bg-gray-950 dark:text-gray-100 antialiased">
-  <!-- Toast -->
-  <div id="toast" class="fixed top-4 left-1/2 -translate-x-1/2 z-[100] hidden">
-    <span class="px-4 py-2 rounded-full bg-gray-900 text-white text-sm shadow-glow dark:bg-gray-800">Copied!</span>
-  </div>
-
-  <!-- Decorative blobs -->
-  <div class="pointer-events-none fixed inset-0 -z-10">
-    <div class="absolute -top-24 -left-16 w-[28rem] h-[28rem] bg-gradient-to-br from-brand-400 via-rose-500 to-fuchsia-500 rounded-full blob"></div>
-    <div class="absolute -bottom-24 -right-16 w-[28rem] h-[28rem] bg-gradient-to-tr from-fuchsia-500 via-brand-500 to-purple-500 rounded-full blob"></div>
-  </div>
-
-  <!-- Announcement -->
-  <div class="relative z-10">
-    <div class="mx-auto max-w-7xl px-4">
-      <div class="mt-3 mb-2 rounded-xl border border-pink-200/40 bg-pink-50/70 backdrop-blur text-pink-900 dark:bg-pink-900/20 dark:text-pink-100 dark:border-pink-900/40 flex items-center justify-between px-4 py-2">
-        <p class="text-sm">🎉 <strong>YAPL v0.3.0</strong> is out — blocks, traits & a tiny runtime. </p>
-        <a href="#roadmap" class="text-sm font-medium underline decoration-pink-400/60 hover:decoration-pink-600">See what’s new</a>
+    <!-- Announcement -->
+    <div class="relative z-10">
+      <div class="mx-auto max-w-7xl px-4">
+        <div
+          class="mt-3 mb-2 rounded-xl border border-pink-200/40 bg-pink-50/70 backdrop-blur text-pink-900 dark:bg-pink-900/20 dark:text-pink-100 dark:border-pink-900/40 flex items-center justify-between px-4 py-2"
+        >
+          <p class="text-sm">
+            🎉 <strong>YAPL v0.3.0</strong> is out — blocks, traits & a tiny
+            runtime.
+          </p>
+          <a
+            href="#roadmap"
+            class="text-sm font-medium underline decoration-pink-400/60 hover:decoration-pink-600"
+            >See what’s new</a
+          >
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- Navbar -->
-  <header class="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-white/60 bg-white/85 dark:bg-gray-950/70 border-b border-white/0 dark:border-gray-800">
-    <nav class="mx-auto max-w-7xl px-4">
-      <div class="flex items-center justify-between py-3">
-        <a href="#" class="flex items-center gap-3 group">
-          <!-- Brand icon (same as favicon) -->
-          <img alt="YAPL logo" class="w-9 h-9 rounded-xl shadow-glow"
-               src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='128' viewBox='0 0 128 128'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%23f472b6'/%3E%3Cstop offset='1' stop-color='%23ec4899'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect rx='28' ry='28' width='128' height='128' fill='url(%23g)'/%3E%3Ctext x='64' y='86' text-anchor='middle' font-size='72' font-family='Inter,Arial,Helvetica,sans-serif' fill='white' font-weight='900'%3EY%3C/text%3E%3C/svg%3E" />
-          <span class="text-lg font-extrabold tracking-tight bg-gradient-to-r from-pink-600 to-rose-500 bg-clip-text text-transparent">YAPL</span>
-          <span class="ml-2 text-xs px-2 py-0.5 rounded-full bg-pink-100 text-pink-800 dark:bg-pink-900/40 dark:text-pink-100 border border-pink-200/60 dark:border-pink-800/60">Yet Another Prompt Language</span>
-        </a>
-
-        <div class="hidden md:flex items-center gap-6">
-          <a class="navlink text-sm hover:text-pink-600" href="#why">Why YAPL</a>
-          <a class="navlink text-sm hover:text-pink-600" href="#install">Install</a>
-          <a class="navlink text-sm hover:text-pink-600" href="#examples">Examples</a>
-          <a class="navlink text-sm hover:text-pink-600" href="#playground">Playground</a>
-          <a class="navlink text-sm hover:text-pink-600" href="#faq">FAQ</a>
-          <!-- VS Code Extension link -->
-          <a class="text-sm hover:text-pink-600 flex items-center gap-2"
-             href="https://marketplace.visualstudio.com/items?itemName=yapl.yapl-vscode"
-             target="_blank" rel="noopener">
-            <img alt="" class="w-4 h-4"
-                 src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='128' viewBox='0 0 128 128'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%23f472b6'/%3E%3Cstop offset='1' stop-color='%23ec4899'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect rx='28' ry='28' width='128' height='128' fill='url(%23g)'/%3E%3Ctext x='64' y='86' text-anchor='middle' font-size='72' font-family='Inter,Arial,Helvetica,sans-serif' fill='white' font-weight='900'%3EY%3C/text%3E%3C/svg%3E" />
-            VS Code Extension
+    <!-- Navbar -->
+    <header
+      class="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-white/60 bg-white/85 dark:bg-gray-950/70 border-b border-white/0 dark:border-gray-800"
+    >
+      <nav class="mx-auto max-w-7xl px-4">
+        <div class="flex items-center justify-between py-3">
+          <a href="#" class="flex items-center gap-3 group">
+            <!-- Brand icon (same as favicon) -->
+            <img
+              alt="YAPL logo"
+              class="w-9 h-9 rounded-xl shadow-glow"
+              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='128' viewBox='0 0 128 128'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%23f472b6'/%3E%3Cstop offset='1' stop-color='%23ec4899'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect rx='28' ry='28' width='128' height='128' fill='url(%23g)'/%3E%3Ctext x='64' y='86' text-anchor='middle' font-size='72' font-family='Inter,Arial,Helvetica,sans-serif' fill='white' font-weight='900'%3EY%3C/text%3E%3C/svg%3E"
+            />
+            <span
+              class="text-lg font-extrabold tracking-tight bg-gradient-to-r from-pink-600 to-rose-500 bg-clip-text text-transparent"
+              >YAPL</span
+            >
+            <span
+              class="ml-2 text-xs px-2 py-0.5 rounded-full bg-pink-100 text-pink-800 dark:bg-pink-900/40 dark:text-pink-100 border border-pink-200/60 dark:border-pink-800/60"
+              >Yet Another Prompt Language</span
+            >
           </a>
-          <button id="themeToggle" class="rounded-lg px-3 py-2 text-sm border border-gray-200 hover:border-pink-300 dark:border-gray-700 dark:hover:border-pink-700" aria-label="Toggle theme">🌙</button>
-          <a href="#get-started" class="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-brand-500 to-rose-500 px-4 py-2 text-white text-sm font-semibold shadow-glow hover:opacity-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-300">Get Started</a>
-        </div>
 
-        <button id="mobileMenuBtn" class="md:hidden rounded-lg border px-3 py-2 text-sm border-gray-200 dark:border-gray-700" aria-label="Open Menu">Menu</button>
-      </div>
-
-      <div id="mobileMenu" class="md:hidden hidden pb-3">
-        <div class="grid gap-2">
-          <a class="block px-3 py-2 rounded hover:bg-pink-50 dark:hover:bg-gray-800" href="#why">Why YAPL</a>
-          <a class="block px-3 py-2 rounded hover:bg-pink-50 dark:hover:bg-gray-800" href="#install">Install</a>
-          <a class="block px-3 py-2 rounded hover:bg-pink-50 dark:hover:bg-gray-800" href="#examples">Examples</a>
-          <a class="block px-3 py-2 rounded hover:bg-pink-50 dark:hover:bg-gray-800" href="#playground">Playground</a>
-          <a class="block px-3 py-2 rounded hover:bg-pink-50 dark:hover:bg-gray-800" href="#faq">FAQ</a>
-          <a class="block px-3 py-2 rounded hover:bg-pink-50 dark:hover:bg-gray-800"
-             href="https://marketplace.visualstudio.com/items?itemName=yapl.yapl-vscode" target="_blank" rel="noopener">VS Code Extension</a>
-          <div class="flex items-center gap-2 px-3 pt-2">
-            <button id="themeToggleMobile" class="rounded-lg px-3 py-2 text-sm border border-gray-200 dark:border-gray-700" aria-label="Toggle theme">🌙</button>
-            <a href="#get-started" class="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-brand-500 to-rose-500 px-4 py-2 text-white text-sm font-semibold shadow-glow">Get Started</a>
-          </div>
-        </div>
-      </div>
-    </nav>
-  </header>
-
-  <!-- Hero -->
-  <section id="get-started" class="relative">
-    <div class="mx-auto max-w-7xl px-4 py-16 sm:py-20">
-      <div class="grid md:grid-cols-2 gap-10 items-center">
-        <div>
-          <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">
-            A tiny, <span class="bg-gradient-to-r from-pink-600 to-rose-500 bg-clip-text text-transparent">pink-powered</span> prompt language.
-          </h1>
-          <p class="mt-5 text-lg text-gray-600 dark:text-gray-300">
-            YAPL is a markdown-first, composable templating language for AI agents. Define <strong>blocks</strong>, reuse with <strong>traits</strong>, and inject <strong>variables</strong>.
-          </p>
-          <div class="mt-6 flex flex-wrap gap-3">
-            <a href="#install" class="btn bg-gray-900 text-white dark:bg-white dark:text-gray-900 hover:opacity-95">Install</a>
-            <a href="#playground" class="btn border border-gray-300 dark:border-gray-700 hover:border-pink-400 dark:hover:border-pink-600">Open Playground</a>
-            <a href="https://marketplace.visualstudio.com/items?itemName=yapl.yapl-vscode"
-               target="_blank" rel="noopener"
-               class="btn bg-gradient-to-r from-brand-500 to-rose-500 text-white shadow-glow hover:opacity-95 flex items-center gap-2">
-               <img alt="" class="w-5 h-5"
-                    src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='128' viewBox='0 0 128 128'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%23f472b6'/%3E%3Cstop offset='1' stop-color='%23ec4899'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect rx='28' ry='28' width='128' height='128' fill='url(%23g)'/%3E%3Ctext x='64' y='86' text-anchor='middle' font-size='72' font-family='Inter,Arial,Helvetica,sans-serif' fill='white' font-weight='900'%3EY%3C/text%3E%3C/svg%3E" />
-               VS Code Extension
+          <div class="hidden md:flex items-center gap-6">
+            <a class="navlink text-sm hover:text-pink-600" href="#why"
+              >Why YAPL</a
+            >
+            <a class="navlink text-sm hover:text-pink-600" href="#install"
+              >Install</a
+            >
+            <a class="navlink text-sm hover:text-pink-600" href="#examples"
+              >Examples</a
+            >
+            <a class="navlink text-sm hover:text-pink-600" href="#playground"
+              >Playground</a
+            >
+            <a class="navlink text-sm hover:text-pink-600" href="#faq">FAQ</a>
+            <!-- VS Code Extension link -->
+            <a
+              class="text-sm hover:text-pink-600 flex items-center gap-2"
+              href="https://marketplace.visualstudio.com/items?itemName=yapl.yapl-vscode"
+              target="_blank"
+              rel="noopener"
+            >
+              <img
+                alt=""
+                class="w-4 h-4"
+                src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='128' viewBox='0 0 128 128'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%23f472b6'/%3E%3Cstop offset='1' stop-color='%23ec4899'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect rx='28' ry='28' width='128' height='128' fill='url(%23g)'/%3E%3Ctext x='64' y='86' text-anchor='middle' font-size='72' font-family='Inter,Arial,Helvetica,sans-serif' fill='white' font-weight='900'%3EY%3C/text%3E%3C/svg%3E"
+              />
+              VS Code Extension
             </a>
+            <button
+              id="themeToggle"
+              class="rounded-lg px-3 py-2 text-sm border border-gray-200 hover:border-pink-300 dark:border-gray-700 dark:hover:border-pink-700"
+              aria-label="Toggle theme"
+            >
+              🌙
+            </button>
+            <a
+              href="#get-started"
+              class="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-brand-500 to-rose-500 px-4 py-2 text-white text-sm font-semibold shadow-glow hover:opacity-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-300"
+              >Get Started</a
+            >
           </div>
-          <div class="mt-6 flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
-            <span>MIT Licensed</span> • <span>Zero deps runtime</span> • <span>Works anywhere</span>
-          </div>
+
+          <button
+            id="mobileMenuBtn"
+            class="md:hidden rounded-lg border px-3 py-2 text-sm border-gray-200 dark:border-gray-700"
+            aria-label="Open Menu"
+          >
+            Menu
+          </button>
         </div>
 
-        <div class="relative">
-          <div class="absolute -inset-3 rounded-3xl bg-gradient-to-tr from-pink-500/20 via-fuchsia-500/20 to-rose-500/20 blur-2xl"></div>
-          <div class="relative rounded-2xl border border-white/60 dark:border-gray-800 bg-white/70 dark:bg-gray-900/50 backdrop-blur p-4 shadow-glow">
-            <div class="flex items-center justify-between px-3 py-2">
-              <div class="flex items-center gap-2">
-                <span class="w-3 h-3 rounded-full bg-rose-400"></span>
-                <span class="w-3 h-3 rounded-full bg-pink-400"></span>
-                <span class="w-3 h-3 rounded-full bg-fuchsia-400"></span>
-              </div>
-              <span class="text-xs text-gray-500">hello.yapl</span>
+        <div id="mobileMenu" class="md:hidden hidden pb-3">
+          <div class="grid gap-2">
+            <a
+              class="block px-3 py-2 rounded hover:bg-pink-50 dark:hover:bg-gray-800"
+              href="#why"
+              >Why YAPL</a
+            >
+            <a
+              class="block px-3 py-2 rounded hover:bg-pink-50 dark:hover:bg-gray-800"
+              href="#install"
+              >Install</a
+            >
+            <a
+              class="block px-3 py-2 rounded hover:bg-pink-50 dark:hover:bg-gray-800"
+              href="#examples"
+              >Examples</a
+            >
+            <a
+              class="block px-3 py-2 rounded hover:bg-pink-50 dark:hover:bg-gray-800"
+              href="#playground"
+              >Playground</a
+            >
+            <a
+              class="block px-3 py-2 rounded hover:bg-pink-50 dark:hover:bg-gray-800"
+              href="#faq"
+              >FAQ</a
+            >
+            <a
+              class="block px-3 py-2 rounded hover:bg-pink-50 dark:hover:bg-gray-800"
+              href="https://marketplace.visualstudio.com/items?itemName=yapl.yapl-vscode"
+              target="_blank"
+              rel="noopener"
+              >VS Code Extension</a
+            >
+            <div class="flex items-center gap-2 px-3 pt-2">
+              <button
+                id="themeToggleMobile"
+                class="rounded-lg px-3 py-2 text-sm border border-gray-200 dark:border-gray-700"
+                aria-label="Toggle theme"
+              >
+                🌙
+              </button>
+              <a
+                href="#get-started"
+                class="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-brand-500 to-rose-500 px-4 py-2 text-white text-sm font-semibold shadow-glow"
+                >Get Started</a
+              >
             </div>
-            <pre class="relative"><button class="copy-btn absolute right-3 top-3 text-xs rounded-lg px-2 py-1 border border-gray-700/30 hover:border-pink-500/60">Copy</button><code class="language-twig text-[13px]">
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Hero -->
+    <section id="get-started" class="relative">
+      <div class="mx-auto max-w-7xl px-4 py-16 sm:py-20">
+        <div class="grid md:grid-cols-2 gap-10 items-center">
+          <div>
+            <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">
+              A tiny,
+              <span
+                class="bg-gradient-to-r from-pink-600 to-rose-500 bg-clip-text text-transparent"
+                >pink-powered</span
+              >
+              prompt language.
+            </h1>
+            <p class="mt-5 text-lg text-gray-600 dark:text-gray-300">
+              YAPL is a markdown-first, composable templating language for AI
+              agents. Define <strong>blocks</strong>, reuse with
+              <strong>traits</strong>, and inject <strong>variables</strong>.
+            </p>
+            <div class="mt-6 flex flex-wrap gap-3">
+              <a
+                href="#install"
+                class="btn bg-gray-900 text-white dark:bg-white dark:text-gray-900 hover:opacity-95"
+                >Install</a
+              >
+              <a
+                href="#playground"
+                class="btn border border-gray-300 dark:border-gray-700 hover:border-pink-400 dark:hover:border-pink-600"
+                >Open Playground</a
+              >
+              <a
+                href="https://marketplace.visualstudio.com/items?itemName=yapl.yapl-vscode"
+                target="_blank"
+                rel="noopener"
+                class="btn bg-gradient-to-r from-brand-500 to-rose-500 text-white shadow-glow hover:opacity-95 flex items-center gap-2"
+              >
+                <img
+                  alt=""
+                  class="w-5 h-5"
+                  src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='128' viewBox='0 0 128 128'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%23f472b6'/%3E%3Cstop offset='1' stop-color='%23ec4899'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect rx='28' ry='28' width='128' height='128' fill='url(%23g)'/%3E%3Ctext x='64' y='86' text-anchor='middle' font-size='72' font-family='Inter,Arial,Helvetica,sans-serif' fill='white' font-weight='900'%3EY%3C/text%3E%3C/svg%3E"
+                />
+                VS Code Extension
+              </a>
+            </div>
+            <div
+              class="mt-6 flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400"
+            >
+              <span>MIT Licensed</span> • <span>Zero deps runtime</span> •
+              <span>Works anywhere</span>
+            </div>
+          </div>
+
+          <div class="relative">
+            <div
+              class="absolute -inset-3 rounded-3xl bg-gradient-to-tr from-pink-500/20 via-fuchsia-500/20 to-rose-500/20 blur-2xl"
+            ></div>
+            <div
+              class="relative rounded-2xl border border-white/60 dark:border-gray-800 bg-white/70 dark:bg-gray-900/50 backdrop-blur p-4 shadow-glow"
+            >
+              <div class="flex items-center justify-between px-3 py-2">
+                <div class="flex items-center gap-2">
+                  <span class="w-3 h-3 rounded-full bg-rose-400"></span>
+                  <span class="w-3 h-3 rounded-full bg-pink-400"></span>
+                  <span class="w-3 h-3 rounded-full bg-fuchsia-400"></span>
+                </div>
+                <span class="text-xs text-gray-500">hello.yapl</span>
+              </div>
+              <pre
+                class="relative"
+              ><button class="copy-btn absolute right-3 top-3 text-xs rounded-lg px-2 py-1 border border-gray-700/30 hover:border-pink-500/60">Copy</button><code class="language-twig text-[13px]">
 {# YAPL: Hello World #}
 {% block system %}
 You are a helpful assistant. Keep answers crisp.
@@ -191,28 +367,801 @@ Summarize this text in 3 bullets:
 {{ text }}
 {% endblock %}
             </code></pre>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Why -->
-  <section id="why" class="mx-auto max-w-7xl px-4 py-12">
-    <h2 class="text-2xl md:text-3xl font-extrabold flex items-center">
-      Why YAPL <a href="#why" class="anchor text-pink-500" aria-label="Link to Why YAPL">#</a>
-    </h2>
-    <p class="mt-2 text-gray-600 dark:text-gray-300">Everything you need to write durable, reusable prompts.</p>
+    <!-- Why -->
+    <section id="why" class="mx-auto max-w-7xl px-4 py-12">
+      <h2 class="text-2xl md:text-3xl font-extrabold flex items-center">
+        Why YAPL
+        <a
+          href="#why"
+          class="anchor text-pink-500"
+          aria-label="Link to Why YAPL"
+          >#</a
+        >
+      </h2>
+      <p class="mt-2 text-gray-600 dark:text-gray-300">
+        Everything you need to write durable, reusable prompts.
+      </p>
 
-    <div class="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      <div class="rounded-2xl border border-gray-200 dark:border-gray-800 p-6 bg-white/60 dark:bg-gray-900/40">
-        <div class="w-10 h-10 grid place-items-center rounded-lg bg-pink-100 text-pink-700 dark:bg-pink-900/30 dark:text-pink-200 mb-3">🧱</div>
-        <h3 class="font-semibold">Blocks</h3>
-        <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Split prompts into logical blocks (system, guidance, output_format...). Compose them like UI.</p>
+      <div class="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div
+          class="rounded-2xl border border-gray-200 dark:border-gray-800 p-6 bg-white/60 dark:bg-gray-900/40"
+        >
+          <div
+            class="w-10 h-10 grid place-items-center rounded-lg bg-pink-100 text-pink-700 dark:bg-pink-900/30 dark:text-pink-200 mb-3"
+          >
+            🧱
+          </div>
+          <h3 class="font-semibold">Blocks</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">
+            Split prompts into logical blocks (system, guidance,
+            output_format...). Compose them like UI.
+          </p>
+        </div>
+        <div
+          class="rounded-2xl border border-gray-200 dark:border-gray-800 p-6 bg-white/60 dark:bg-gray-900/40"
+        >
+          <div
+            class="w-10 h-10 grid place-items-center rounded-lg bg-pink-100 text-pink-700 dark:bg-pink-900/30 dark:text-pink-200 mb-3"
+          >
+            🧬
+          </div>
+          <h3 class="font-semibold">Traits</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">
+            Attach traits like <code class="font-mono">concise</code> or
+            <code class="font-mono">formal</code> to change tone without
+            duplicating text.
+          </p>
+        </div>
+        <div
+          class="rounded-2xl border border-gray-200 dark:border-gray-800 p-6 bg-white/60 dark:bg-gray-900/40"
+        >
+          <div
+            class="w-10 h-10 grid place-items-center rounded-lg bg-pink-100 text-pink-700 dark:bg-pink-900/30 dark:text-pink-200 mb-3"
+          >
+            🧩
+          </div>
+          <h3 class="font-semibold">Variables</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">
+            Interpolate with <code class="font-mono">{{"{{ var }}"}}</code>.
+            Optional defaults, strict mode, and safe rendering.
+          </p>
+        </div>
+        <div
+          class="rounded-2xl border border-gray-200 dark:border-gray-800 p-6 bg-white/60 dark:bg-gray-900/40"
+        >
+          <div
+            class="w-10 h-10 grid place-items-center rounded-lg bg-pink-100 text-pink-700 dark:bg-pink-900/30 dark:text-pink-200 mb-3"
+          >
+            📝
+          </div>
+          <h3 class="font-semibold">Markdown-first</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">
+            Write prompts as readable docs. Keep formatting deterministic.
+          </p>
+        </div>
+        <div
+          class="rounded-2xl border border-gray-200 dark:border-gray-800 p-6 bg-white/60 dark:bg-gray-900/40"
+        >
+          <div
+            class="w-10 h-10 grid place-items-center rounded-lg bg-pink-100 text-pink-700 dark:bg-pink-900/30 dark:text-pink-200 mb-3"
+          >
+            🧪
+          </div>
+          <h3 class="font-semibold">Testable</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">
+            Snapshot prompts, diff traits, and validate variable contracts.
+          </p>
+        </div>
+        <div
+          class="rounded-2xl border border-gray-200 dark:border-gray-800 p-6 bg-white/60 dark:bg-gray-900/40"
+        >
+          <div
+            class="w-10 h-10 grid place-items-center rounded-lg bg-pink-100 text-pink-700 dark:bg-pink-900/30 dark:text-pink-200 mb-3"
+          >
+            🧰
+          </div>
+          <h3 class="font-semibold">Tiny runtime</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">
+            Ship a ~2KB renderer or compile to JSON for any stack.
+          </p>
+        </div>
       </div>
-      <div class="rounded-2xl border border-gray-200 dark:border-gray-800 p-6 bg-white/60 dark:bg-gray-900/40">
-        <div class="w-10 h-10 grid place-items-center rounded-lg bg-pink-100 text-pink-700 dark:bg-pink-900/30 dark:text-pink-200 mb-3">🧬</div>
-        <h3 class="font-semibold">Traits</h3>
-        <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Attach traits like <code class="font-mono">concise</code> or <code class="font-mono">formal</code> to change tone without duplicating text.</p>
+    </section>
+
+    <!-- Install -->
+    <section id="install" class="mx-auto max-w-7xl px-4 py-12">
+      <h2 class="text-2xl md:text-3xl font-extrabold flex items-center">
+        Install
+        <a
+          href="#install"
+          class="anchor text-pink-500"
+          aria-label="Link to Install"
+          >#</a
+        >
+      </h2>
+      <p class="mt-2 text-gray-600 dark:text-gray-300">
+        Pick your environment. YAPL ships a CLI and a tiny JS runtime.
+      </p>
+
+      <div
+        class="mt-6 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white/60 dark:bg-gray-900/40 overflow-hidden"
+      >
+        <div
+          class="flex flex-wrap items-center gap-2 border-b border-gray-200/70 dark:border-gray-800/80 px-3 py-2"
+        >
+          <button
+            class="tab px-3 py-1.5 text-sm rounded-lg bg-pink-100 text-pink-900 dark:bg-pink-900/30 dark:text-pink-100"
+            data-tab="npm"
+          >
+            npm
+          </button>
+          <button
+            class="tab px-3 py-1.5 text-sm rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
+            data-tab="pnpm"
+          >
+            pnpm
+          </button>
+          <button
+            class="tab px-3 py-1.5 text-sm rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
+            data-tab="bun"
+          >
+            bun
+          </button>
+          <button
+            class="tab px-3 py-1.5 text-sm rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
+            data-tab="deno"
+          >
+            deno
+          </button>
+        </div>
+        <div class="p-4">
+          <div class="tabpanel" data-panel="npm">
+            <pre
+              class="relative"
+            ><button class="copy-btn absolute right-3 top-3 text-xs rounded-lg px-2 py-1 border border-gray-700/30 hover:border-pink-500/60">Copy</button><code class="language-bash">npm i -D yapl-cli
+npx yapl init
+npx yapl render ./prompts/hello.yapl --vars ./vars.json</code></pre>
+          </div>
+          <div class="tabpanel hidden" data-panel="pnpm">
+            <pre
+              class="relative"
+            ><button class="copy-btn absolute right-3 top-3 text-xs rounded-lg px-2 py-1 border border-gray-700/30 hover:border-pink-500/60">Copy</button><code class="language-bash">pnpm add -D yapl-cli
+pnpm yapl init
+pnpm yapl render ./prompts/hello.yapl --vars ./vars.json</code></pre>
+          </div>
+          <div class="tabpanel hidden" data-panel="bun">
+            <pre
+              class="relative"
+            ><button class="copy-btn absolute right-3 top-3 text-xs rounded-lg px-2 py-1 border border-gray-700/30 hover:border-pink-500/60">Copy</button><code class="language-bash">bun add -d yapl-cli
+bunx yapl init
+bunx yapl render ./prompts/hello.yapl --vars ./vars.json</code></pre>
+          </div>
+          <div class="tabpanel hidden" data-panel="deno">
+            <pre
+              class="relative"
+            ><button class="copy-btn absolute right-3 top-3 text-xs rounded-lg px-2 py-1 border border-gray-700/30 hover:border-pink-500/60">Copy</button><code class="language-bash">deno run -A jsr:@yapl/cli init
+deno run -A jsr:@yapl/cli render ./prompts/hello.yapl --vars ./vars.json</code></pre>
+          </div>
+        </div>
       </div>
-      <div class="rounded-2xl border border-gray-200 dark:border-gray-800 p-6 bg-whit
+    </section>
+
+    <!-- Examples -->
+    <section id="examples" class="mx-auto max-w-7xl px-4 py-12">
+      <h2 class="text-2xl md:text-3xl font-extrabold flex items-center">
+        Examples
+        <a
+          href="#examples"
+          class="anchor text-pink-500"
+          aria-label="Link to Examples"
+          >#</a
+        >
+      </h2>
+      <p class="mt-2 text-gray-600 dark:text-gray-300">
+        A few core language patterns.
+      </p>
+
+      <div class="mt-6 grid lg:grid-cols-2 gap-8">
+        <article
+          class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white/60 dark:bg-gray-900/40 overflow-hidden"
+        >
+          <div
+            class="px-4 py-3 border-b border-gray-200 dark:border-gray-800 flex items-center justify-between"
+          >
+            <h3 class="font-semibold">Blocks & Variables</h3>
+            <button
+              class="copy-btn text-xs rounded-lg px-2 py-1 border border-gray-700/30 hover:border-pink-500/60"
+              data-copy="#code1"
+            >
+              Copy
+            </button>
+          </div>
+          <pre id="code1"><code class="language-twig">
+{# blocks.yapl #}
+{% block system %}You are a translator to {{ targetLanguage | default: "English" }}.{% endblock %}
+
+{% block guidance %}
+- Keep brand names untouched.
+- Preserve code blocks.
+{% endblock %}
+
+{% block prompt %}
+Translate the following text:
+---
+{{ text }}
+---
+{% endblock %}
+        </code></pre>
+        </article>
+
+        <article
+          class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white/60 dark:bg-gray-900/40 overflow-hidden"
+        >
+          <div
+            class="px-4 py-3 border-b border-gray-200 dark:border-gray-800 flex items-center justify-between"
+          >
+            <h3 class="font-semibold">Traits & Overrides</h3>
+            <button
+              class="copy-btn text-xs rounded-lg px-2 py-1 border border-gray-700/30 hover:border-pink-500/60"
+              data-copy="#code2"
+            >
+              Copy
+            </button>
+          </div>
+          <pre id="code2"><code class="language-twig">
+{# traits.yapl #}
+{% trait concise %}{% block guidance %}Respond in 3 bullets max.{% endblock %}{% endtrait %}
+{% trait markdown %}{% block output_format %}Markdown only.{% endblock %}{% endtrait %}
+
+{% block prompt with traits = ["concise","markdown"] %}
+Summarize the following:
+{{ content }}
+{% endblock %}
+        </code></pre>
+        </article>
+
+        <article
+          class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white/60 dark:bg-gray-900/40 overflow-hidden lg:col-span-2"
+        >
+          <div
+            class="px-4 py-3 border-b border-gray-200 dark:border-gray-800 flex items-center justify-between"
+          >
+            <h3 class="font-semibold">Includes & Partials</h3>
+            <button
+              class="copy-btn text-xs rounded-lg px-2 py-1 border border-gray-700/30 hover:border-pink-500/60"
+              data-copy="#code3"
+            >
+              Copy
+            </button>
+          </div>
+          <pre id="code3"><code class="language-twig">
+{# include.yapl #}
+{% include "./partials/safety.yapl" %}
+
+{% block prompt %}
+Using the safety guidelines above, answer the question:
+{{ question }}
+{% endblock %}
+        </code></pre>
+        </article>
+      </div>
+    </section>
+
+    <!-- Playground -->
+    <section id="playground" class="mx-auto max-w-7xl px-4 py-12">
+      <h2 class="text-2xl md:text-3xl font-extrabold flex items-center">
+        Playground
+        <a
+          href="#playground"
+          class="anchor text-pink-500"
+          aria-label="Link to Playground"
+          >#</a
+        >
+      </h2>
+      <p class="mt-2 text-gray-600 dark:text-gray-300">
+        This simple client-side demo renders variables and basic blocks.
+      </p>
+
+      <div class="mt-6 grid lg:grid-cols-2 gap-6">
+        <div
+          class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white/60 dark:bg-gray-900/40 overflow-hidden"
+        >
+          <div
+            class="px-4 py-2 border-b border-gray-200 dark:border-gray-800 flex items-center justify-between"
+          >
+            <span class="text-sm font-medium">Template (.yapl)</span>
+            <button
+              id="resetTpl"
+              class="text-xs rounded-lg px-2 py-1 border border-gray-700/30 hover:border-pink-500/60"
+            >
+              Reset
+            </button>
+          </div>
+          <textarea
+            id="tpl"
+            class="w-full h-64 p-4 font-mono text-sm bg-transparent outline-none resize-none"
+            spellcheck="false"
+          >
+{% block system %}
+You are a helpful assistant.
+{% endblock %}
+
+{% block guidance %}
+- Be concise and accurate.
+{% endblock %}
+
+{% block prompt %}
+Hello {{ userName }}!
+Summarize this text in {{ bullets | default: 3 }} bullets:
+{{ text }}
+{% endblock %}</textarea
+          >
+        </div>
+
+        <div
+          class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white/60 dark:bg-gray-900/40 overflow-hidden"
+        >
+          <div
+            class="px-4 py-2 border-b border-gray-200 dark:border-gray-800 flex items-center justify-between"
+          >
+            <span class="text-sm font-medium">Variables (JSON)</span>
+            <button
+              id="resetVars"
+              class="text-xs rounded-lg px-2 py-1 border border-gray-700/30 hover:border-pink-500/60"
+            >
+              Reset
+            </button>
+          </div>
+          <textarea
+            id="vars"
+            class="w-full h-64 p-4 font-mono text-sm bg-transparent outline-none resize-none"
+            spellcheck="false"
+          >
+{
+  "userName": "YAPL Fan",
+  "bullets": 3,
+  "text": "YAPL is neat, tiny, and pinkish. It helps me compose prompts like Lego."
+}</textarea
+          >
+        </div>
+
+        <div class="lg:col-span-2">
+          <div class="flex flex-wrap items-center gap-3">
+            <button
+              id="renderBtn"
+              class="btn bg-gradient-to-r from-brand-500 to-rose-500 text-white shadow-glow hover:opacity-95"
+            >
+              Render
+            </button>
+            <button
+              id="copyOutput"
+              class="btn border border-gray-300 dark:border-gray-700 hover:border-pink-400 dark:hover:border-pink-600"
+            >
+              Copy Output
+            </button>
+            <span id="renderStatus" class="text-sm text-gray-500"></span>
+          </div>
+          <div
+            class="mt-4 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white/70 dark:bg-gray-900/40 p-4"
+          >
+            <pre
+              class="overflow-auto"
+            ><code id="output" class="language-markdown">Click Render to see the compiled prompt…</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VS Code section (icon download) -->
+    <section id="vscode" class="mx-auto max-w-7xl px-4 py-12">
+      <h2 class="text-2xl md:text-3xl font-extrabold flex items-center">
+        VS Code Extension
+        <a
+          href="#vscode"
+          class="anchor text-pink-500"
+          aria-label="Link to VS Code Extension"
+          >#</a
+        >
+      </h2>
+      <div class="mt-4 grid gap-6 sm:grid-cols-2">
+        <a
+          href="https://marketplace.visualstudio.com/items?itemName=yapl.yapl-vscode"
+          target="_blank"
+          rel="noopener"
+          class="group rounded-2xl border border-gray-200 dark:border-gray-800 bg-white/60 dark:bg-gray-900/40 p-6 flex items-center gap-4 hover:border-pink-400 dark:hover:border-pink-700"
+        >
+          <img
+            alt="YAPL VS Code icon"
+            class="w-14 h-14 rounded-xl shadow-glow"
+            src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256' viewBox='0 0 128 128'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%23f472b6'/%3E%3Cstop offset='1' stop-color='%23ec4899'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect rx='28' ry='28' width='128' height='128' fill='url(%23g)'/%3E%3Ctext x='64' y='86' text-anchor='middle' font-size='72' font-family='Inter,Arial,Helvetica,sans-serif' fill='white' font-weight='900'%3EY%3C/text%3E%3C/svg%3E"
+          />
+          <div>
+            <div class="font-semibold">
+              Install from Visual Studio Marketplace
+            </div>
+            <div class="text-sm text-gray-600 dark:text-gray-400">
+              Syntax, snippets, and future LSP diagnostics.
+            </div>
+          </div>
+        </a>
+
+        <!-- Downloadable icon asset (same image), useful if you need the file -->
+        <div
+          class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white/60 dark:bg-gray-900/40 p-6"
+        >
+          <div class="flex items-center gap-4">
+            <img
+              alt=""
+              class="w-14 h-14 rounded-xl shadow-glow"
+              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256' viewBox='0 0 128 128'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%23f472b6'/%3E%3Cstop offset='1' stop-color='%23ec4899'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect rx='28' ry='28' width='128' height='128' fill='url(%23g)'/%3E%3Ctext x='64' y='86' text-anchor='middle' font-size='72' font-family='Inter,Arial,Helvetica,sans-serif' fill='white' font-weight='900'%3EY%3C/text%3E%3C/svg%3E"
+            />
+            <div class="flex-1">
+              <div class="font-semibold">YAPL Icon (SVG)</div>
+              <p class="text-sm text-gray-600 dark:text-gray-400">
+                Right-click and “Save image as…” or use the button:
+              </p>
+            </div>
+            <a
+              class="btn border border-gray-300 dark:border-gray-700 hover:border-pink-400 dark:hover:border-pink-600"
+              href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256' viewBox='0 0 128 128'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%23f472b6'/%3E%3Cstop offset='1' stop-color='%23ec4899'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect rx='28' ry='28' width='128' height='128' fill='url(%23g)'/%3E%3Ctext x='64' y='86' text-anchor='middle' font-size='72' font-family='Inter,Arial,Helvetica,sans-serif' fill='white' font-weight='900'%3EY%3C/text%3E%3C/svg%3E"
+              download="yapl-icon.svg"
+              >Download SVG</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Roadmap -->
+    <section id="roadmap" class="mx-auto max-w-7xl px-4 py-12">
+      <h2 class="text-2xl md:text-3xl font-extrabold flex items-center">
+        Roadmap
+        <a
+          href="#roadmap"
+          class="anchor text-pink-500"
+          aria-label="Link to Roadmap"
+          >#</a
+        >
+      </h2>
+      <ol
+        class="mt-6 relative border-l pl-6 border-pink-200 dark:border-pink-900/40"
+      >
+        <li class="mb-8">
+          <div
+            class="absolute -left-2 top-1.5 w-3 h-3 bg-gradient-to-br from-brand-500 to-rose-500 rounded-full shadow-glow"
+          ></div>
+          <h3 class="font-semibold">v0.3 — Traits & minimal runtime (✅)</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400">
+            Composables, defaults, simple renderer.
+          </p>
+        </li>
+        <li class="mb-8">
+          <div
+            class="absolute -left-2 top-1.5 w-3 h-3 bg-gradient-to-br from-brand-500 to-rose-500 rounded-full shadow-glow"
+          ></div>
+          <h3 class="font-semibold">v0.4 — LSP & VS Code syntax</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400">
+            Hover docs, diagnostics, and highlighting.
+          </p>
+        </li>
+        <li class="mb-0">
+          <div
+            class="absolute -left-2 top-1.5 w-3 h-3 bg-gradient-to-br from-brand-500 to-rose-500 rounded-full shadow-glow"
+          ></div>
+          <h3 class="font-semibold">v0.5 — Compiler & bundler</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400">
+            Compile to JSON/AST + tree-shaking includes.
+          </p>
+        </li>
+      </ol>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="mx-auto max-w-7xl px-4 py-12">
+      <h2 class="text-2xl md:text-3xl font-extrabold flex items-center">
+        FAQ
+        <a href="#faq" class="anchor text-pink-500" aria-label="Link to FAQ"
+          >#</a
+        >
+      </h2>
+      <div class="mt-4 grid lg:grid-cols-2 gap-4">
+        <details
+          class="rounded-xl border border-gray-200 dark:border-gray-800 p-4 bg-white/60 dark:bg-gray-900/40"
+        >
+          <summary class="cursor-pointer font-semibold">
+            Is YAPL a real language?
+          </summary>
+          <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
+            This page shows an ergonomic design. The demo runtime here is
+            minimal and client-side only.
+          </p>
+        </details>
+        <details
+          class="rounded-xl border border-gray-200 dark:border-gray-800 p-4 bg-white/60 dark:bg-gray-900/40"
+        >
+          <summary class="cursor-pointer font-semibold">
+            How are blocks rendered?
+          </summary>
+          <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
+            Blocks render in declaration order. Traits can override blocks or
+            append hints.
+          </p>
+        </details>
+        <details
+          class="rounded-xl border border-gray-200 dark:border-gray-800 p-4 bg-white/60 dark:bg-gray-900/40"
+        >
+          <summary class="cursor-pointer font-semibold">
+            How do defaults work?
+          </summary>
+          <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
+            Use <code class="font-mono">{{"{{ var | default: value }}"}}</code>.
+            The demo resolves that pattern.
+          </p>
+        </details>
+        <details
+          class="rounded-xl border border-gray-200 dark:border-gray-800 p-4 bg-white/60 dark:bg-gray-900/40"
+        >
+          <summary class="cursor-pointer font-semibold">
+            Editor support?
+          </summary>
+          <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
+            Planned: syntax highlighting, snippets, and LSP diagnostics.
+          </p>
+        </details>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-200 dark:border-gray-800">
+      <div
+        class="mx-auto max-w-7xl px-4 py-8 flex flex-col sm:flex-row items-center justify-between gap-3"
+      >
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          © <span id="year"></span> YAPL. Made with 💗
+        </p>
+        <div class="flex items-center gap-4 text-sm">
+          <a href="#why" class="hover:text-pink-600">Docs</a>
+          <a href="#playground" class="hover:text-pink-600">Playground</a>
+          <a
+            href="https://marketplace.visualstudio.com/items?itemName=yapl.yapl-vscode"
+            target="_blank"
+            rel="noopener"
+            class="hover:text-pink-600"
+            >VS Code Extension</a
+          >
+          <a href="#" class="hover:text-pink-600">GitHub</a>
+          <a href="#" class="hover:text-pink-600">Twitter</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scroll-to-top -->
+    <button
+      id="toTop"
+      class="fixed bottom-6 right-6 hidden rounded-full p-3 shadow-glow bg-gradient-to-r from-brand-500 to-rose-500 text-white"
+      aria-label="Scroll to top"
+    >
+      ↑
+    </button>
+
+    <!-- Scripts -->
+    <script>
+      // tiny helpers
+      const $ = (s, scope = document) => scope.querySelector(s);
+      const $$ = (s, scope = document) => Array.from(scope.querySelectorAll(s));
+      const showToast = (msg = "Copied!") => {
+        const t = $("#toast");
+        t.querySelector("span").textContent = msg;
+        t.classList.remove("hidden");
+        clearTimeout(showToast._t);
+        showToast._t = setTimeout(() => t.classList.add("hidden"), 1200);
+      };
+
+      // theme
+      const applyTheme = (t) => {
+        if (
+          t === "dark" ||
+          (t === "auto" &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches)
+        ) {
+          document.documentElement.classList.add("dark");
+        } else {
+          document.documentElement.classList.remove("dark");
+        }
+      };
+      const savedTheme = localStorage.getItem("theme") || "auto";
+      applyTheme(savedTheme);
+      $("#themeToggle")?.addEventListener("click", () => {
+        const isDark = document.documentElement.classList.contains("dark");
+        const next = isDark ? "light" : "dark";
+        localStorage.setItem("theme", next);
+        applyTheme(next);
+      });
+      $("#themeToggleMobile")?.addEventListener("click", () => {
+        const isDark = document.documentElement.classList.contains("dark");
+        const next = isDark ? "light" : "dark";
+        localStorage.setItem("theme", next);
+        applyTheme(next);
+      });
+
+      // mobile menu
+      $("#mobileMenuBtn")?.addEventListener("click", () => {
+        $("#mobileMenu").classList.toggle("hidden");
+      });
+
+      // copy buttons
+      const copyText = async (txt) => {
+        try {
+          await navigator.clipboard.writeText(txt);
+          showToast("Copied!");
+        } catch (e) {
+          const ta = document.createElement("textarea");
+          ta.value = txt;
+          document.body.appendChild(ta);
+          ta.select();
+          try {
+            document.execCommand("copy");
+            showToast("Copied!");
+          } finally {
+            ta.remove();
+          }
+        }
+      };
+      $$(".copy-btn").forEach((btn) => {
+        if (btn.dataset.copy) {
+          btn.addEventListener("click", () => {
+            const code =
+              document.querySelector(btn.dataset.copy)?.innerText || "";
+            copyText(code);
+          });
+        } else {
+          btn.addEventListener("click", () => {
+            const pre = btn.closest("pre");
+            const code = pre ? pre.innerText.replace(/^Copy\s*/, "") : "";
+            copyText(code);
+          });
+        }
+      });
+
+      // tabs
+      $$(".tab").forEach((tab) => {
+        tab.addEventListener("click", () => {
+          const name = tab.dataset.tab;
+          $$(".tab").forEach((t) => {
+            t.classList.remove(
+              "bg-pink-100",
+              "text-pink-900",
+              "dark:bg-pink-900/30",
+              "dark:text-pink-100"
+            );
+          });
+          tab.classList.add(
+            "bg-pink-100",
+            "text-pink-900",
+            "dark:bg-pink-900/30",
+            "dark:text-pink-100"
+          );
+          $$(".tabpanel").forEach((p) =>
+            p.classList.toggle("hidden", p.dataset.panel !== name)
+          );
+        });
+      });
+
+      // scrollspy
+      const links = $$(".navlink");
+      const sections = ["why", "install", "examples", "playground", "faq"].map(
+        (id) => document.getElementById(id)
+      );
+      const spObs = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              links.forEach((l) => l.classList.remove("text-pink-600"));
+              const active = links.find(
+                (l) => l.getAttribute("href") === `#${entry.target.id}`
+              );
+              active?.classList.add("text-pink-600");
+            }
+          });
+        },
+        { rootMargin: "-40% 0px -55% 0px", threshold: 0.01 }
+      );
+      sections.forEach((sec) => sec && spObs.observe(sec));
+
+      // year
+      $("#year").textContent = new Date().getFullYear();
+
+      // scroll to top
+      const toTop = $("#toTop");
+      window.addEventListener("scroll", () => {
+        toTop.classList.toggle("hidden", window.scrollY < 600);
+      });
+      toTop.addEventListener("click", () =>
+        window.scrollTo({ top: 0, behavior: "smooth" })
+      );
+
+      // Playground: mini renderer (demo only)
+      const DEFAULT_TPL = $("#tpl").value.trim();
+      const DEFAULT_VARS = $("#vars").value.trim();
+
+      const parseBlocks = (tpl) => {
+        const re =
+          /{%\s*block\s+([\w\-]+)(?:\s+with\s+traits\s*=\s*\[(.*?)\]\s*)?%}([\s\S]*?){%\s*endblock\s*%}/g;
+        const blocks = [];
+        let m;
+        while ((m = re.exec(tpl)) !== null) {
+          blocks.push({
+            name: m[1],
+            traitsRaw: m[2] || "",
+            content: m[3].trim(),
+          });
+        }
+        return blocks;
+      };
+      const applyDefaults = (s, vars) => {
+        return s.replace(
+          /{{\s*([\w.]+)\s*\|\s*default:\s*([^}]+)\s*}}/g,
+          (_, key, defVal) => {
+            const k = key.trim();
+            const v = k.split(".").reduce((o, p) => o && o[p], vars);
+            const d = defVal
+              .trim()
+              .replace(/^"(.*)"$/, "$1")
+              .replace(/^'(.*)'$/, "$1");
+            return v === undefined || v === null || v === "" ? d : String(v);
+          }
+        );
+      };
+      const interpolate = (s, vars) => {
+        s = applyDefaults(s, vars);
+        return s.replace(/{{\s*([\w.]+)\s*}}/g, (_, key) => {
+          const v = key.split(".").reduce((o, p) => o && o[p], vars);
+          return v === undefined || v === null ? "" : String(v);
+        });
+      };
+      const renderYAPL = (tpl, vars) => {
+        const blocks = parseBlocks(tpl);
+        let out = "";
+        blocks.forEach((b) => {
+          out += interpolate(b.content, vars).trim() + "\n\n";
+        });
+        return out.trim();
+      };
+
+      $("#renderBtn").addEventListener("click", () => {
+        const tpl = $("#tpl").value;
+        let vars = {};
+        try {
+          vars = JSON.parse($("#vars").value || "{}");
+        } catch (e) {
+          $("#renderStatus").textContent = "Invalid JSON in variables.";
+          return;
+        }
+        const t0 = performance.now();
+        const result = renderYAPL(tpl, vars);
+        const t1 = performance.now();
+        $("#output").textContent = result;
+        if (window.Prism) Prism.highlightElement($("#output"));
+        $("#renderStatus").textContent = `Rendered in ${(t1 - t0).toFixed(
+          1
+        )}ms`;
+      });
+
+      $("#copyOutput").addEventListener("click", () => {
+        copyText($("#output").textContent || "");
+      });
+      $("#resetTpl").addEventListener("click", () => {
+        $("#tpl").value = DEFAULT_TPL;
+      });
+      $("#resetVars").addEventListener("click", () => {
+        $("#vars").value = DEFAULT_VARS;
+      });
+    </script>
+  </body>
+</html>
