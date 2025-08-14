@@ -15,9 +15,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          # Fetch the full repository to access both yapl-website and yapl-ts
-          fetch-depth: 0
       
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -29,26 +26,16 @@ jobs:
         with:
           version: 8
       
-      # First build the yapl-ts library
-      - name: Build yapl-ts library
-        run: |
-          cd yapl-ts
-          pnpm install
-          pnpm build
-      
-      # Then build the website
-      - name: Install website dependencies
-        working-directory: yapl-website
+      - name: Install dependencies
         run: pnpm install
       
       - name: Build website
-        working-directory: yapl-website
         run: pnpm build
       
       - name: Upload dist folder
         uses: actions/upload-pages-artifact@v3
         with:
-          path: yapl-website/dist
+          path: dist
   
   deploy:
     runs-on: ubuntu-latest
