@@ -3,8 +3,9 @@ import {
   SandpackProvider,
   SandpackLayout,
   SandpackCodeEditor,
+  useSandpack,
 } from "@codesandbox/sandpack-react";
-import { YAPL } from "../yapl/packages/yapl/src/index.ts";
+import { YAPL } from "@yapl-language/yapl.ts";
 
 const INITIAL_FILES = {
   "/prompts/base/system.md.yapl": `# System
@@ -69,6 +70,66 @@ Always include practical examples in your responses.
 `,
 };
 
+function PlaygroundContent({ output, setOutput, status, setStatus, varsText, setVarsText, renderNow }) {
+  const { sandpack } = useSandpack();
+
+  // Listen for file changes and update VFS
+  useEffect(() => {
+    const updateVFS = () => {
+      let current = window.__YAPL_VFS;
+      if (!(current instanceof Map)) {
+        current = new Map();
+        // seed all initial files so nothing is missing
+        Object.entries(INITIAL_FILES).forEach(([k, v]) => {
+          current.set("/vfs" + k, v);
+        });
+      }
+      
+      // Update VFS with current file contents
+      Object.entries(sandpack.files).forEach(([path, file]) => {
+        if (path.endsWith(".yapl")) {
+          current.set("/vfs" + path, file.code);
+        }
+      });
+      
+      window.__YAPL_VFS = current;
+    };
+
+    updateVFS();
+  }, [sandpack.files]);
+
+  return (
+    <SandpackLayout>
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <SandpackCodeEditor
+          showLineNumbers
+          showInlineErrors
+          wrapContent
+          style={{ height: 380, borderRadius: 12 }}
+        />
+      </div>
+      <div style={{ width: 360 }} className="p-2 flex flex-col gap-2">
+        <label className="text-sm font-medium">Variables (JSON)</label>
+        <textarea
+          value={varsText}
+          onChange={(e) => setVarsText(e.target.value)}
+          rows={10}
+          className="w-full rounded border border-gray-300 dark:border-gray-700 bg-transparent p-2 text-sm font-mono"
+        />
+        <button
+          className="btn border border-gray-300 dark:border-gray-700 hover:border-pink-400 dark:hover:border-pink-600"
+          onClick={async () => {
+            await renderNow();
+          }}
+        >
+          Render
+        </button>
+        <div className="text-xs text-gray-500">{status}</div>
+      </div>
+    </SandpackLayout>
+  );
+}
+
 export default function YaplPlayground() {
   const [output, setOutput] = useState("");
   const [status, setStatus] = useState("");
@@ -123,7 +184,53 @@ export default function YaplPlayground() {
     setStatus("Rendering...");
     const t0 = performance.now();
     try {
-      const engine = new YAPL({ baseDir: "/vfs" });
+      // Create YAPL instance with browser-compatible options
+      const engine = new YAPL({ 
+        baseDir: "/vfs",
+        // Provide custom file loading function for browser
+        loadFile: async (absolutePath) => {
+          const content = vfs.get(absolutePath);
+          if (content === undefined) {
+            throw new Error(`File not found: ${absolutePath}. Available files: ${Array.from(vfs.keys()).join(', ')}`);
+          }
+          return content;
+        },
+        // Provide custom path resolution for browser
+        resolvePath: (templateRef, fromDir, ensureExt) => {
+          let resolved;
+          if (templateRef.startsWith('/')) {
+            // Absolute path
+            resolved = templateRef;
+          } else {
+            // Relative path - resolve relative to fromDir
+            // Combine fromDir and templateRef
+            if (fromDir.endsWith('/')) {
+              resolved = fromDir + templateRef;
+            } else {
+              resolved = fromDir + '/' + templateRef;
+            }
+          }
+          
+          // Normalize the path (handle .. and .)
+          const parts = resolved.split('/').filter(p => p);
+          const normalizedParts = [];
+          
+          for (const part of parts) {
+            if (part === '..') {
+              normalizedParts.pop();
+            } else if (part !== '.') {
+              normalizedParts.push(part);
+            }
+          }
+          
+          const normalizedPath = '/' + normalizedParts.join('/');
+          return ensureExt(normalizedPath);
+        },
+        ensureExtension: (p) => {
+          return p.endsWith('.yapl') ? p : p + '.yapl';
+        }
+      });
+      
       const { content } = await engine.render(
         "prompts/examples/conditional-agent.md.yapl",
         vars
@@ -134,6 +241,7 @@ export default function YaplPlayground() {
     } catch (err) {
       setStatus(String(err));
       setOutput("");
+      console.error('YAPL render error:', err);
     }
   };
 
@@ -150,49 +258,15 @@ export default function YaplPlayground() {
           activeFile: "/prompts/examples/conditional-agent.md.yapl",
         }}
       >
-        <SandpackLayout>
-          <div style={{ flex: 1, minWidth: 0 }}>
-            <SandpackCodeEditor
-              showLineNumbers
-              showInlineErrors
-              wrapContent
-              style={{ height: 380, borderRadius: 12 }}
-              onCodeUpdate={(code, path) => {
-                // update VFS on every keystroke for this file
-                let current = window.__YAPL_VFS;
-                if (!(current instanceof Map)) {
-                  current = new Map();
-                  // seed all initial files so nothing is missing
-                  Object.entries(INITIAL_FILES).forEach(([k, v]) => {
-                    current.set("/vfs" + k, v);
-                  });
-                }
-                if (path.endsWith(".yapl")) {
-                  current.set("/vfs" + path, code);
-                  window.__YAPL_VFS = current;
-                }
-              }}
-            />
-          </div>
-          <div style={{ width: 360 }} className="p-2 flex flex-col gap-2">
-            <label className="text-sm font-medium">Variables (JSON)</label>
-            <textarea
-              value={varsText}
-              onChange={(e) => setVarsText(e.target.value)}
-              rows={10}
-              className="w-full rounded border border-gray-300 dark:border-gray-700 bg-transparent p-2 text-sm font-mono"
-            />
-            <button
-              className="btn border border-gray-300 dark:border-gray-700 hover:border-pink-400 dark:hover:border-pink-600"
-              onClick={async () => {
-                await renderNow();
-              }}
-            >
-              Render
-            </button>
-            <div className="text-xs text-gray-500">{status}</div>
-          </div>
-        </SandpackLayout>
+        <PlaygroundContent 
+          output={output}
+          setOutput={setOutput}
+          status={status}
+          setStatus={setStatus}
+          varsText={varsText}
+          setVarsText={setVarsText}
+          renderNow={renderNow}
+        />
       </SandpackProvider>
       <div className="mt-4">
         <label className="text-sm font-medium">Output</label>
