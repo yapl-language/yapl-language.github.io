@@ -30,47 +30,55 @@ const INITIAL_FILES = {
 {% mixin "../mixins/tone_friendly.md.yapl" %}
 
 {% block persona %}
-{{ super() }}
-{% if user_type == "expert" %}
-You are an advanced AI assistant with deep technical knowledge.
-{% else %}
-You are a beginner-friendly AI assistant that explains things simply.
-{% endif %}
+    {{ super() }}
+    {% if user_type == "expert" %}
+        You are an advanced AI assistant with deep technical knowledge.
+    {% else %}
+        You are a beginner-friendly AI assistant that explains things simply.
+    {% endif %}
 
-{% if domain is defined %}
-You specialize in {{ domain }}.
-{% endif %}
+    {% if domain is defined %}
+        You specialize in {{ domain }}.
+    {% endif %}
 {% endblock %}
 
 {% block guidance %}
-{{ super() }}
-{% if user_type == "expert" %}
-Provide detailed technical explanations with code examples when relevant.
-{% else %}
-Use simple language and avoid jargon. Provide step-by-step explanations.
-{% endif %}
+    {{ super() }}
+    {% if user_type == "expert" %}
+        Provide detailed technical explanations with code examples when relevant.
+    {% else %}
+        Use simple language and avoid jargon. Provide step-by-step explanations.
+    {% endif %}
 
-{% if include_examples is defined and include_examples %}
-Always include practical examples in your responses.
-{% endif %}
+    {% if include_examples is defined and include_examples %}
+        Always include practical examples in your responses.
+    {% endif %}
 {% endblock %}
 
 {% block capabilities %}
-{% if capability_1 is defined %}
-## Your Capabilities
-- {{ capability_1 }}
-{% if capability_2 is defined %}
-- {{ capability_2 }}
-{% endif %}
-{% if capability_3 is defined %}
-- {{ capability_3 }}
-{% endif %}
-{% endif %}
+    {% if capability_1 is defined %}
+        ## Your Capabilities
+        - {{ capability_1 }}
+        {% if capability_2 is defined %}
+            - {{ capability_2 }}
+        {% endif %}
+        {% if capability_3 is defined %}
+            - {{ capability_3 }}
+        {% endif %}
+    {% endif %}
 {% endblock %}
 `,
 };
 
-function PlaygroundContent({ output, setOutput, status, setStatus, varsText, setVarsText, renderNow }) {
+function PlaygroundContent({
+  output,
+  setOutput,
+  status,
+  setStatus,
+  varsText,
+  setVarsText,
+  renderNow,
+}) {
   const { sandpack } = useSandpack();
 
   // Listen for file changes and update VFS
@@ -84,14 +92,14 @@ function PlaygroundContent({ output, setOutput, status, setStatus, varsText, set
           current.set("/vfs" + k, v);
         });
       }
-      
+
       // Update VFS with current file contents
       Object.entries(sandpack.files).forEach(([path, file]) => {
         if (path.endsWith(".yapl")) {
           current.set("/vfs" + path, file.code);
         }
       });
-      
+
       window.__YAPL_VFS = current;
     };
 
@@ -185,52 +193,56 @@ export default function YaplPlayground() {
     const t0 = performance.now();
     try {
       // Create YAPL instance with browser-compatible options
-      const engine = new YAPL({ 
+      const engine = new YAPL({
         baseDir: "/vfs",
         // Provide custom file loading function for browser
         loadFile: async (absolutePath) => {
           const content = vfs.get(absolutePath);
           if (content === undefined) {
-            throw new Error(`File not found: ${absolutePath}. Available files: ${Array.from(vfs.keys()).join(', ')}`);
+            throw new Error(
+              `File not found: ${absolutePath}. Available files: ${Array.from(
+                vfs.keys()
+              ).join(", ")}`
+            );
           }
           return content;
         },
         // Provide custom path resolution for browser
         resolvePath: (templateRef, fromDir, ensureExt) => {
           let resolved;
-          if (templateRef.startsWith('/')) {
+          if (templateRef.startsWith("/")) {
             // Absolute path
             resolved = templateRef;
           } else {
             // Relative path - resolve relative to fromDir
             // Combine fromDir and templateRef
-            if (fromDir.endsWith('/')) {
+            if (fromDir.endsWith("/")) {
               resolved = fromDir + templateRef;
             } else {
-              resolved = fromDir + '/' + templateRef;
+              resolved = fromDir + "/" + templateRef;
             }
           }
-          
+
           // Normalize the path (handle .. and .)
-          const parts = resolved.split('/').filter(p => p);
+          const parts = resolved.split("/").filter((p) => p);
           const normalizedParts = [];
-          
+
           for (const part of parts) {
-            if (part === '..') {
+            if (part === "..") {
               normalizedParts.pop();
-            } else if (part !== '.') {
+            } else if (part !== ".") {
               normalizedParts.push(part);
             }
           }
-          
-          const normalizedPath = '/' + normalizedParts.join('/');
+
+          const normalizedPath = "/" + normalizedParts.join("/");
           return ensureExt(normalizedPath);
         },
         ensureExtension: (p) => {
-          return p.endsWith('.yapl') ? p : p + '.yapl';
-        }
+          return p.endsWith(".yapl") ? p : p + ".yapl";
+        },
       });
-      
+
       const { content } = await engine.render(
         "prompts/examples/conditional-agent.md.yapl",
         vars
@@ -241,7 +253,7 @@ export default function YaplPlayground() {
     } catch (err) {
       setStatus(String(err));
       setOutput("");
-      console.error('YAPL render error:', err);
+      console.error("YAPL render error:", err);
     }
   };
 
@@ -258,7 +270,7 @@ export default function YaplPlayground() {
           activeFile: "/prompts/examples/conditional-agent.md.yapl",
         }}
       >
-        <PlaygroundContent 
+        <PlaygroundContent
           output={output}
           setOutput={setOutput}
           status={status}

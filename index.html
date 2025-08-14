@@ -120,46 +120,6 @@
   <body
     class="bg-white text-gray-800 dark:bg-gray-950 dark:text-gray-100 antialiased"
   >
-    <!-- Toast -->
-    <div
-      id="toast"
-      class="fixed top-4 left-1/2 -translate-x-1/2 z-[100] hidden"
-    >
-      <span
-        class="px-4 py-2 rounded-full bg-gray-900 text-white text-sm shadow-glow dark:bg-gray-800"
-        >Copied!</span
-      >
-    </div>
-
-    <!-- Decorative blobs -->
-    <div class="pointer-events-none fixed inset-0 -z-10">
-      <div
-        class="absolute -top-24 -left-16 w-[28rem] h-[28rem] bg-gradient-to-br from-brand-400 via-rose-500 to-fuchsia-500 rounded-full blob"
-      ></div>
-      <div
-        class="absolute -bottom-24 -right-16 w-[28rem] h-[28rem] bg-gradient-to-tr from-fuchsia-500 via-brand-500 to-purple-500 rounded-full blob"
-      ></div>
-    </div>
-
-    <!-- Announcement -->
-    <div class="relative z-10">
-      <div class="mx-auto max-w-7xl px-4">
-        <div
-          class="mt-3 mb-2 rounded-xl border border-pink-200/40 bg-pink-50/70 backdrop-blur text-pink-900 dark:bg-pink-900/20 dark:text-pink-100 dark:border-pink-900/40 flex items-center justify-between px-4 py-2"
-        >
-          <p class="text-sm">
-            🎉 <strong>YAPL v0.3.0</strong> is out — blocks, traits & a tiny
-            runtime.
-          </p>
-          <a
-            href="#roadmap"
-            class="text-sm font-medium underline decoration-pink-400/60 hover:decoration-pink-600"
-            >See what’s new</a
-          >
-        </div>
-      </div>
-    </div>
-
     <!-- Navbar -->
     <header
       class="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-white/60 bg-white/85 dark:bg-gray-950/70 border-b border-white/0 dark:border-gray-800"
@@ -200,15 +160,11 @@
             <!-- VS Code Extension link -->
             <a
               class="text-sm hover:text-pink-600 flex items-center gap-2"
-              href="https://marketplace.visualstudio.com/items?itemName=yapl.yapl-vscode"
+              href="https://marketplace.visualstudio.com/items?itemName=EinfachAI.yapl"
               target="_blank"
               rel="noopener"
             >
-              <img
-                alt=""
-                class="w-4 h-4"
-                src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='128' viewBox='0 0 128 128'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%23f472b6'/%3E%3Cstop offset='1' stop-color='%23ec4899'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect rx='28' ry='28' width='128' height='128' fill='url(%23g)'/%3E%3Ctext x='64' y='86' text-anchor='middle' font-size='72' font-family='Inter,Arial,Helvetica,sans-serif' fill='white' font-weight='900'%3EY%3C/text%3E%3C/svg%3E"
-              />
+              <img alt="" class="w-4 h-4" src="/vscode-logo.webp" />
               VS Code Extension
             </a>
             <button
@@ -219,9 +175,9 @@
               🌙
             </button>
             <a
-              href="#get-started"
+              href="https://yapl-language.github.io/documentation"
               class="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-brand-500 to-rose-500 px-4 py-2 text-white text-sm font-semibold shadow-glow hover:opacity-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-300"
-              >Get Started</a
+              >Documentation</a
             >
           </div>
 
@@ -248,11 +204,6 @@
             >
             <a
               class="block px-3 py-2 rounded hover:bg-pink-50 dark:hover:bg-gray-800"
-              href="#examples"
-              >Examples</a
-            >
-            <a
-              class="block px-3 py-2 rounded hover:bg-pink-50 dark:hover:bg-gray-800"
               href="#playground"
               >Playground</a
             >
@@ -263,7 +214,7 @@
             >
             <a
               class="block px-3 py-2 rounded hover:bg-pink-50 dark:hover:bg-gray-800"
-              href="https://marketplace.visualstudio.com/items?itemName=yapl.yapl-vscode"
+              href="https://marketplace.visualstudio.com/items?itemName=EinfachAI.yapl"
               target="_blank"
               rel="noopener"
               >VS Code Extension</a
@@ -301,9 +252,15 @@
               prompt language.
             </h1>
             <p class="mt-5 text-lg text-gray-600 dark:text-gray-300">
-              YAPL is a markdown-first, composable templating language for AI
-              agents. Define <strong>blocks</strong>, reuse with
-              <strong>traits</strong>, and inject <strong>variables</strong>.
+              <strong
+                >YAPL is a text-based templating language built for the future
+                of AI agents.</strong
+              >
+              YAPL makes prompt design composable and scalable: define
+              <strong>blocks</strong> once, extend with
+              <strong>mixins</strong> and <strong>inheritance</strong>, and
+              inject <strong>variables</strong> seamlessly. Write less, reuse
+              more — because the future of agents deserves better prompts.
             </p>
             <div class="mt-6 flex flex-wrap gap-3">
               <a
@@ -314,23 +271,22 @@
               <a
                 href="#playground"
                 class="btn border border-gray-300 dark:border-gray-700 hover:border-pink-400 dark:hover:border-pink-600"
-                >Open Playground</a
+                >Playground</a
               >
               <a
-                href="https://marketplace.visualstudio.com/items?itemName=yapl.yapl-vscode"
+                href="https://marketplace.visualstudio.com/items?itemName=EinfachAI.yapl"
                 target="_blank"
                 rel="noopener"
                 class="btn bg-gradient-to-r from-brand-500 to-rose-500 text-white shadow-glow hover:opacity-95 flex items-center gap-2"
               >
-                <img alt="" class="w-5 h-5" src="./icon.png" />
-                VS Code Extension
+                Documentation
               </a>
             </div>
             <div
               class="mt-6 flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400"
             >
-              <span>MIT Licensed</span> • <span>Zero deps runtime</span> •
-              <span>Works anywhere</span>
+              <span>Inspired by Twig</span> • <span>MIT Licensed</span> •
+              <span>From AI for AI</span>
             </div>
           </div>
 
@@ -354,27 +310,27 @@
               ><button class="copy-btn absolute right-3 top-3 text-xs rounded-lg px-2 py-1 border border-gray-700/30 hover:border-pink-500/60">Copy</button><code class="language-twig text-[13px]">
 {# AI Code Reviewer Template #}
 {% block system %}
-You are an expert code reviewer with deep knowledge of {{ language | default("programming") }}.
+  You are an expert code reviewer with deep knowledge of {{ language | default("programming") }}.
 {% endblock %}
 
 {% block guidance %}
-- Focus on code quality, security, and best practices
-- Provide specific, actionable feedback
-{% if experience_level == "junior" %}
-- Explain the reasoning behind your suggestions
-{% endif %}
+  - Focus on code quality, security, and best practices
+  - Provide specific, actionable feedback
+  {% if experience_level == "junior" %}
+    - Explain the reasoning behind your suggestions
+  {% endif %}
 {% endblock %}
 
 {% block prompt %}
-Please review the following {{ language }} code:
+  Please review the following {{ language }} code:
 
-```{{ language }}
-{{ code }}
-```
+  ```{{ language }}
+    {{ code }}
+  ```
 
-{% if focus_areas is defined %}
-Pay special attention to: {{ focus_areas | join(", ") }}
-{% endif %}
+  {% if focus_areas is defined %}
+    Pay special attention to: {{ focus_areas | join(", ") }}
+  {% endif %}
 {% endblock %}
             </code></pre>
             </div>
@@ -414,7 +370,7 @@ Pay special attention to: {{ focus_areas | join(", ") }}
           </p>
         </div>
         <div
-          class="rounded-2xl border border-gray-200 dark:border-gray-800 p-6 bg-white/60 dark:bg-gray-900/40"
+          class="rounded-2xl border border-gray-200 dark:border-gray-800 p--6 bg-white/60 dark:bg-gray-900/40"
         >
           <div
             class="w-10 h-10 grid place-items-center rounded-lg bg-pink-100 text-pink-700 dark:bg-pink-900/30 dark:text-pink-200 mb-3"
@@ -523,184 +479,24 @@ Pay special attention to: {{ focus_areas | join(", ") }}
           >
             bun
           </button>
-          <button
-            class="tab px-3 py-1.5 text-sm rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
-            data-tab="deno"
-          >
-            deno
-          </button>
         </div>
         <div class="p-4">
           <div class="tabpanel" data-panel="npm">
             <pre
               class="relative"
-            ><button class="copy-btn absolute right-3 top-3 text-xs rounded-lg px-2 py-1 border border-gray-700/30 hover:border-pink-500/60">Copy</button><code class="language-bash">npm i -D yapl-cli
-npx yapl init
-npx yapl render ./prompts/hello.yapl --vars ./vars.json</code></pre>
+            ><button class="copy-btn absolute right-3 top-3 text-xs rounded-lg px-2 py-1 border border-gray-700/30 hover:border-pink-500/60">Copy</button><code class="language-bash">npm i @yapl-language/yapl.ts</code></pre>
           </div>
           <div class="tabpanel hidden" data-panel="pnpm">
             <pre
               class="relative"
-            ><button class="copy-btn absolute right-3 top-3 text-xs rounded-lg px-2 py-1 border border-gray-700/30 hover:border-pink-500/60">Copy</button><code class="language-bash">pnpm add -D yapl-cli
-pnpm yapl init
-pnpm yapl render ./prompts/hello.yapl --vars ./vars.json</code></pre>
+            ><button class="copy-btn absolute right-3 top-3 text-xs rounded-lg px-2 py-1 border border-gray-700/30 hover:border-pink-500/60">Copy</button><code class="language-bash">pnpm add @yapl-language/yapl.ts</code></pre>
           </div>
           <div class="tabpanel hidden" data-panel="bun">
             <pre
               class="relative"
-            ><button class="copy-btn absolute right-3 top-3 text-xs rounded-lg px-2 py-1 border border-gray-700/30 hover:border-pink-500/60">Copy</button><code class="language-bash">bun add -d yapl-cli
-bunx yapl init
-bunx yapl render ./prompts/hello.yapl --vars ./vars.json</code></pre>
-          </div>
-          <div class="tabpanel hidden" data-panel="deno">
-            <pre
-              class="relative"
-            ><button class="copy-btn absolute right-3 top-3 text-xs rounded-lg px-2 py-1 border border-gray-700/30 hover:border-pink-500/60">Copy</button><code class="language-bash">deno run -A jsr:@yapl/cli init
-deno run -A jsr:@yapl/cli render ./prompts/hello.yapl --vars ./vars.json</code></pre>
+            ><button class="copy-btn absolute right-3 top-3 text-xs rounded-lg px-2 py-1 border border-gray-700/30 hover:border-pink-500/60">Copy</button><code class="language-bash">bun add @yapl-language/yapl.ts</code></pre>
           </div>
         </div>
-      </div>
-    </section>
-
-    <!-- Examples -->
-    <section id="examples" class="mx-auto max-w-7xl px-4 py-12">
-      <h2 class="text-2xl md:text-3xl font-extrabold flex items-center">
-        Examples
-        <a
-          href="#examples"
-          class="anchor text-pink-500"
-          aria-label="Link to Examples"
-          >#</a
-        >
-      </h2>
-      <p class="mt-2 text-gray-600 dark:text-gray-300">
-        A few core language patterns.
-      </p>
-
-      <div class="mt-6 grid lg:grid-cols-2 gap-8">
-        <article
-          class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white/60 dark:bg-gray-900/40 overflow-hidden"
-        >
-          <div
-            class="px-4 py-3 border-b border-gray-200 dark:border-gray-800 flex items-center justify-between"
-          >
-            <h3 class="font-semibold">Blocks & Variables</h3>
-            <button
-              class="copy-btn text-xs rounded-lg px-2 py-1 border border-gray-700/30 hover:border-pink-500/60"
-              data-copy="#code1"
-            >
-              Copy
-            </button>
-          </div>
-          <pre id="code1"><code class="language-twig">
-{# translator.md.yapl #}
-{% block system %}
-You are a professional translator specializing in {{ targetLanguage | default("English") }}.
-{% endblock %}
-
-{% block guidance %}
-- Maintain the original tone and style
-- Keep technical terms and brand names unchanged
-- Preserve formatting and code blocks
-{% endblock %}
-
-{% block prompt %}
-Translate the following {{ sourceLanguage | default("text") }} to {{ targetLanguage }}:
-
----
-{{ text }}
----
-{% endblock %}
-        </code></pre>
-        </article>
-
-        <article
-          class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white/60 dark:bg-gray-900/40 overflow-hidden"
-        >
-          <div
-            class="px-4 py-3 border-b border-gray-200 dark:border-gray-800 flex items-center justify-between"
-          >
-            <h3 class="font-semibold">Conditional Logic</h3>
-            <button
-              class="copy-btn text-xs rounded-lg px-2 py-1 border border-gray-700/30 hover:border-pink-500/60"
-              data-copy="#code2"
-            >
-              Copy
-            </button>
-          </div>
-          <pre id="code2"><code class="language-twig">
-{# conditional-agent.md.yapl #}
-{% extends "base/system.md.yapl" %}
-
-{% block persona %}
-{{ super() }}
-{% if user_type == "expert" %}
-You are an advanced AI with deep technical knowledge.
-{% else %}
-You are a beginner-friendly AI that explains things simply.
-{% endif %}
-
-{% if domain is defined %}
-You specialize in {{ domain }}.
-{% endif %}
-{% endblock %}
-
-{% block guidance %}
-{{ super() }}
-{% if user_type == "expert" %}
-Provide detailed technical explanations with code examples.
-{% else %}
-Use simple language and avoid jargon.
-{% endif %}
-
-{% if include_examples is defined and include_examples %}
-Always include practical examples in your responses.
-{% endif %}
-{% endblock %}
-        </code></pre>
-        </article>
-
-        <article
-          class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white/60 dark:bg-gray-900/40 overflow-hidden lg:col-span-2"
-        >
-          <div
-            class="px-4 py-3 border-b border-gray-200 dark:border-gray-800 flex items-center justify-between"
-          >
-            <h3 class="font-semibold">Template Inheritance & Mixins</h3>
-            <button
-              class="copy-btn text-xs rounded-lg px-2 py-1 border border-gray-700/30 hover:border-pink-500/60"
-              data-copy="#code3"
-            >
-              Copy
-            </button>
-          </div>
-          <pre id="code3"><code class="language-twig">
-{# advanced-agent.md.yapl #}
-{% extends "../base/system.md.yapl" %}
-{% mixin "../mixins/safety.md.yapl", "../mixins/tone_friendly.md.yapl" %}
-
-{% block persona %}
-{{ super() }}
-{% if role == "teacher" %}
-You are an educational AI tutor who loves helping students learn.
-{% if subject is defined %}
-You specialize in teaching {{ subject }}.
-{% endif %}
-{% else %}
-You are a general-purpose AI assistant.
-{% endif %}
-{% endblock %}
-
-{% block guidance %}
-{{ super() }}
-{% if role == "teacher" and experience_level == "beginner" %}
-Use simple language, provide examples, and check for understanding.
-{% else %}
-You can use technical terminology and assume familiarity with concepts.
-{% endif %}
-{% endblock %}
-        </code></pre>
-        </article>
       </div>
     </section>
 
@@ -724,80 +520,6 @@ You can use technical terminology and assume familiarity with concepts.
       <div class="my-8">
         <div id="sandpack-root"></div>
       </div>
-    </section>
-
-    <!-- VS Code section (icon download) -->
-    <section id="vscode" class="mx-auto max-w-7xl px-4 py-12">
-      <h2 class="text-2xl md:text-3xl font-extrabold flex items-center">
-        VS Code Extension
-        <a
-          href="#vscode"
-          class="anchor text-pink-500"
-          aria-label="Link to VS Code Extension"
-          >#</a
-        >
-      </h2>
-      <div class="mt-4 grid gap-6 sm:grid-cols-2">
-        <a
-          href="https://marketplace.visualstudio.com/items?itemName=yapl.yapl-vscode"
-          target="_blank"
-          rel="noopener"
-          class="group rounded-2xl border border-gray-200 dark:border-gray-800 bg-white/60 dark:bg-gray-900/40 p-6 flex items-center gap-4 hover:border-pink-400 dark:hover:border-pink-700"
-        >
-          <img
-            alt="YAPL VS Code icon"
-            class="w-14 h-14 rounded-xl shadow-glow"
-            src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256' viewBox='0 0 128 128'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%23f472b6'/%3E%3Cstop offset='1' stop-color='%23ec4899'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect rx='28' ry='28' width='128' height='128' fill='url(%23g)'/%3E%3Ctext x='64' y='86' text-anchor='middle' font-size='72' font-family='Inter,Arial,Helvetica,sans-serif' fill='white' font-weight='900'%3EY%3C/text%3E%3C/svg%3E"
-          />
-          <div>
-            <div class="font-semibold">
-              Install from Visual Studio Marketplace
-            </div>
-            <div class="text-sm text-gray-600 dark:text-gray-400">
-              Syntax, snippets, and future LSP diagnostics.
-            </div>
-          </div>
-        </a>
-
-        <!-- Downloadable icon asset (same image), useful if you need the file -->
-        <div
-          class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white/60 dark:bg-gray-900/40 p-6"
-        >
-          <div class="flex items-center gap-4">
-            <img
-              alt=""
-              class="w-14 h-14 rounded-xl shadow-glow"
-              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256' viewBox='0 0 128 128'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%23f472b6'/%3E%3Cstop offset='1' stop-color='%23ec4899'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect rx='28' ry='28' width='128' height='128' fill='url(%23g)'/%3E%3Ctext x='64' y='86' text-anchor='middle' font-size='72' font-family='Inter,Arial,Helvetica,sans-serif' fill='white' font-weight='900'%3EY%3C/text%3E%3C/svg%3E"
-            />
-            <div class="flex-1">
-              <div class="font-semibold">YAPL Icon (SVG)</div>
-              <p class="text-sm text-gray-600 dark:text-gray-400">
-                Right-click and “Save image as…” or use the button:
-              </p>
-            </div>
-            <a
-              class="btn border border-gray-300 dark:border-gray-700 hover:border-pink-400 dark:hover:border-pink-600"
-              href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256' viewBox='0 0 128 128'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%23f472b6'/%3E%3Cstop offset='1' stop-color='%23ec4899'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect rx='28' ry='28' width='128' height='128' fill='url(%23g)'/%3E%3Ctext x='64' y='86' text-anchor='middle' font-size='72' font-family='Inter,Arial,Helvetica,sans-serif' fill='white' font-weight='900'%3EY%3C/text%3E%3C/svg%3E"
-              download="yapl-icon.svg"
-              >Download SVG</a
-            >
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Roadmap -->
-  <section id="roadmap" class="mx-auto max-w-7xl px-4 py-12">
-        <li class="mb-0">
-          <div
-            class="absolute -left-2 top-1.5 w-3 h-3 bg-gradient-to-br from-brand-500 to-rose-500 rounded-full shadow-glow"
-          ></div>
-          <h3 class="font-semibold">v0.5 — Compiler & bundler</h3>
-          <p class="text-sm text-gray-600 dark:text-gray-400">
-            Compile to JSON/AST + tree-shaking includes.
-          </p>
-        </li>
-      </ol>
     </section>
 
     <!-- FAQ -->
@@ -855,6 +577,59 @@ You can use technical terminology and assume familiarity with concepts.
       </div>
     </section>
 
+    <!-- VS Code section (icon download) -->
+    <section id="vscode" class="mx-auto max-w-7xl px-4 py-12">
+      <h2 class="text-2xl md:text-3xl font-extrabold flex items-center">
+        VS Code Extension
+        <a
+          href="#vscode"
+          class="anchor text-pink-500"
+          aria-label="Link to VS Code Extension"
+          >#</a
+        >
+      </h2>
+      <div class="mt-4 grid gap-6 sm:grid-cols-2">
+        <a
+          href="https://marketplace.visualstudio.com/items?itemName=EinfachAI.yapl"
+          target="_blank"
+          rel="noopener"
+          class="group rounded-2xl border border-gray-200 dark:border-gray-800 bg-white/60 dark:bg-gray-900/40 p-6 flex items-center gap-4 hover:border-pink-400 dark:hover:border-pink-700"
+        >
+          <img
+            alt="YAPL VS Code icon"
+            class="w-14 h-14 rounded-xl shadow-glow"
+            src="/vscode-logo.webp"
+          />
+          <div>
+            <div class="font-semibold">
+              Install from Visual Studio Marketplace
+            </div>
+            <div class="text-sm text-gray-600 dark:text-gray-400">
+              Syntax, snippets, and future LSP diagnostics.
+            </div>
+          </div>
+        </a>
+        <a
+          href="https://marketplace.visualstudio.com/items?itemName=EinfachAI.yapl"
+          target="_blank"
+          rel="noopener"
+          class="group rounded-2xl border border-gray-200 dark:border-gray-800 bg-white/60 dark:bg-gray-900/40 p-6 flex items-center gap-4 hover:border-pink-400 dark:hover:border-pink-700"
+        >
+          <img
+            alt="YAPL VS Code icon"
+            class="w-14 h-14 rounded-xl shadow-glow"
+            src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256' viewBox='0 0 128 128'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%23f472b6'/%3E%3Cstop offset='1' stop-color='%23ec4899'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect rx='28' ry='28' width='128' height='128' fill='url(%23g)'/%3E%3Ctext x='64' y='86' text-anchor='middle' font-size='72' font-family='Inter,Arial,Helvetica,sans-serif' fill='white' font-weight='900'%3EY%3C/text%3E%3C/svg%3E"
+          />
+          <div>
+            <div class="font-semibold">Install from Open VSX Registry</div>
+            <div class="text-sm text-gray-600 dark:text-gray-400">
+              Syntax, snippets, and future LSP diagnostics.
+            </div>
+          </div>
+        </a>
+      </div>
+    </section>
+
     <!-- Footer -->
     <footer class="border-t border-gray-200 dark:border-gray-800">
       <div
@@ -864,17 +639,24 @@ You can use technical terminology and assume familiarity with concepts.
           © <span id="year"></span> YAPL. Made with 💗
         </p>
         <div class="flex items-center gap-4 text-sm">
-          <a href="#why" class="hover:text-pink-600">Docs</a>
+          <a
+            href="https://yapl-language.github.io/documentation"
+            class="hover:text-pink-600"
+            >Docs</a
+          >
           <a href="#playground" class="hover:text-pink-600">Playground</a>
           <a
-            href="https://marketplace.visualstudio.com/items?itemName=yapl.yapl-vscode"
+            href="https://marketplace.visualstudio.com/items?itemName=EinfachAI.yapl"
             target="_blank"
             rel="noopener"
             class="hover:text-pink-600"
             >VS Code Extension</a
           >
-          <a href="#" class="hover:text-pink-600">GitHub</a>
-          <a href="#" class="hover:text-pink-600">Twitter</a>
+          <a
+            href="https://github.com/yapl-language/yapl.ts"
+            class="hover:text-pink-600"
+            >GitHub</a
+          >
         </div>
       </div>
     </footer>
@@ -889,14 +671,16 @@ You can use technical terminology and assume familiarity with concepts.
     </button>
 
     <!-- Scripts -->
-  <script type="module" src="/main.jsx"></script>
-  <script>
+    <script type="module" src="/main.jsx"></script>
+    <script>
       // tiny helpers
       const $ = (s, scope = document) => scope.querySelector(s);
       const $$ = (s, scope = document) => Array.from(scope.querySelectorAll(s));
       const showToast = (msg = "Copied!") => {
         const t = $("#toast");
-        t.querySelector("span").textContent = msg;
+        if (!t) return;
+        const span = t.querySelector("span");
+        if (span) span.textContent = msg;
         t.classList.remove("hidden");
         clearTimeout(showToast._t);
         showToast._t = setTimeout(() => t.classList.add("hidden"), 1200);
@@ -904,30 +688,51 @@ You can use technical terminology and assume familiarity with concepts.
 
       // theme
       const applyTheme = (t) => {
-        if (
-          t === "dark" ||
-          (t === "auto" &&
-            window.matchMedia("(prefers-color-scheme: dark)").matches)
-        ) {
-          document.documentElement.classList.add("dark");
-        } else {
-          document.documentElement.classList.remove("dark");
-        }
+        const prefersDark = window.matchMedia(
+          "(prefers-color-scheme: dark)"
+        ).matches;
+        const shouldDark = t === "dark" || (t === "auto" && prefersDark);
+        document.documentElement.classList.toggle("dark", shouldDark);
       };
-      const savedTheme = localStorage.getItem("theme") || "auto";
+
+      const updateThemeButtons = () => {
+        const isDark = document.documentElement.classList.contains("dark");
+        const icon = isDark ? "🌙" : "☀️";
+        const label = isDark ? "Switch to light mode" : "Switch to dark mode";
+        const btns = [$("#themeToggle"), $("#themeToggleMobile")];
+        btns.forEach((b) => {
+          if (!b) return;
+          b.textContent = icon;
+          b.setAttribute("aria-label", label);
+        });
+      };
+
+      const setTheme = (mode) => {
+        localStorage.setItem("theme", mode);
+        applyTheme(mode);
+        updateThemeButtons();
+      };
+
+      const savedTheme = localStorage.getItem("theme") || "auto"; // default respects OS
       applyTheme(savedTheme);
-      $("#themeToggle")?.addEventListener("click", () => {
-        const isDark = document.documentElement.classList.contains("dark");
-        const next = isDark ? "light" : "dark";
-        localStorage.setItem("theme", next);
-        applyTheme(next);
+      updateThemeButtons();
+
+      // keep in sync with OS when in auto
+      const mql = window.matchMedia("(prefers-color-scheme: dark)");
+      mql.addEventListener("change", () => {
+        if ((localStorage.getItem("theme") || "auto") === "auto") {
+          applyTheme("auto");
+          updateThemeButtons();
+        }
       });
-      $("#themeToggleMobile")?.addEventListener("click", () => {
+
+      const toggleTheme = () => {
         const isDark = document.documentElement.classList.contains("dark");
-        const next = isDark ? "light" : "dark";
-        localStorage.setItem("theme", next);
-        applyTheme(next);
-      });
+        setTheme(isDark ? "light" : "dark");
+      };
+
+      $("#themeToggle")?.addEventListener("click", toggleTheme);
+      $("#themeToggleMobile")?.addEventListener("click", toggleTheme);
 
       // mobile menu
       $("#mobileMenuBtn")?.addEventListener("click", () => {
@@ -1025,11 +830,11 @@ You can use technical terminology and assume familiarity with concepts.
         window.scrollTo({ top: 0, behavior: "smooth" })
       );
 
-  // Playground: mini renderer (demo only). Guard if elements exist.
-  const tplEl = document.getElementById("tpl");
-  const varsEl = document.getElementById("vars");
-  const DEFAULT_TPL = tplEl ? tplEl.value.trim() : "";
-  const DEFAULT_VARS = varsEl ? varsEl.value.trim() : "";
+      // Playground: mini renderer (demo only). Guard if elements exist.
+      const tplEl = document.getElementById("tpl");
+      const varsEl = document.getElementById("vars");
+      const DEFAULT_TPL = tplEl ? tplEl.value.trim() : "";
+      const DEFAULT_VARS = varsEl ? varsEl.value.trim() : "";
 
       const parseBlocks = (tpl) => {
         const re =
@@ -1075,7 +880,7 @@ You can use technical terminology and assume familiarity with concepts.
         return out.trim();
       };
 
-  document.getElementById("renderBtn")?.addEventListener("click", () => {
+      document.getElementById("renderBtn")?.addEventListener("click", () => {
         const tpl = $("#tpl").value;
         let vars = {};
         try {
@@ -1094,13 +899,13 @@ You can use technical terminology and assume familiarity with concepts.
         )}ms`;
       });
 
-  document.getElementById("copyOutput")?.addEventListener("click", () => {
+      document.getElementById("copyOutput")?.addEventListener("click", () => {
         copyText($("#output").textContent || "");
       });
-  document.getElementById("resetTpl")?.addEventListener("click", () => {
+      document.getElementById("resetTpl")?.addEventListener("click", () => {
         $("#tpl").value = DEFAULT_TPL;
       });
-  document.getElementById("resetVars")?.addEventListener("click", () => {
+      document.getElementById("resetVars")?.addEventListener("click", () => {
         $("#vars").value = DEFAULT_VARS;
       });
     </script>
