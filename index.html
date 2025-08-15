@@ -150,9 +150,6 @@
             <a class="navlink text-sm hover:text-pink-600" href="#install"
               >Install</a
             >
-            <a class="navlink text-sm hover:text-pink-600" href="#examples"
-              >Examples</a
-            >
             <a class="navlink text-sm hover:text-pink-600" href="#playground"
               >Playground</a
             >
@@ -166,6 +163,42 @@
             >
               <img alt="" class="w-4 h-4" src="/vscode-logo.webp" />
               VS Code Extension
+            </a>
+            <a
+              href="https://github.com/yapl-language/yapl.ts"
+              target="_blank"
+              rel="noopener"
+              aria-label="GitHub"
+              class="p-2 rounded-lg border border-gray-200 hover:border-pink-300 dark:border-gray-700 dark:hover:border-pink-700"
+            >
+              <svg
+                class="w-5 h-5"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  d="M12 .5a12 12 0 0 0-3.79 23.4c.6.11.82-.26.82-.58l-.02-2.02c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.35-1.76-1.35-1.76-1.1-.75.08-.74.08-.74 1.22.08 1.86 1.26 1.86 1.26 1.08 1.86 2.83 1.32 3.52 1.01.11-.8.42-1.32.76-1.63-2.66-.3-5.46-1.33-5.46-5.92 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23a11.4 11.4 0 0 1 6 0c2.3-1.55 3.31-1.23 3.31-1.23.66 1.65.25 2.87.12 3.17.77.84 1.24 1.91 1.24 3.22 0 4.6-2.8 5.61-5.48 5.91.43.37.81 1.1.81 2.22l-.01 3.29c0 .32.21.7.82.58A12 12 0 0 0 12 .5Z"
+                />
+              </svg>
+            </a>
+            <a
+              href="https://discord.gg/your-invite"
+              target="_blank"
+              rel="noopener"
+              aria-label="Discord"
+              class="p-2 rounded-lg border border-gray-200 hover:border-pink-300 dark:border-gray-700 dark:hover:border-pink-700"
+            >
+              <svg
+                class="w-5 h-5"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  d="M20.317 4.369A19.791 19.791 0 0 0 16.558 3c-.2.36-.43.85-.59 1.23a18.27 18.27 0 0 0-7.937 0c-.16-.38-.39-.87-.59-1.23-1.33.24-2.64.67-3.759 1.37C.533 9.054-.32 13.62.099 18.129A19.8 19.8 0 0 0 6.08 20.5c.48-.66.908-1.369 1.273-2.117-.7-.266-1.367-.592-2.003-.972.168-.12.334-.245.495-.372 3.761 1.757 7.842 1.757 11.562 0 .162.128.328.252.495.372-.636.38-1.302.706-2.003.972.365.748.793 1.457 1.273 2.117a19.8 19.8 0 0 0 5.98-2.371c.49-5.242-.837-9.769-3.837-13.76ZM8.02 15.33c-1.106 0-2.005-1.02-2.005-2.276 0-1.257.89-2.276 2.005-2.276 1.125 0 2.014 1.03 2.005 2.276 0 1.256-.89 2.276-2.005 2.276Zm7.96 0c-1.106 0-2.005-1.02-2.005-2.276 0-1.257.89-2.276 2.005-2.276 1.125 0 2.014 1.03 2.005 2.276 0 1.256-.88 2.276-2.005 2.276Z"
+                />
+              </svg>
             </a>
             <button
               id="themeToggle"
@@ -265,20 +298,60 @@
             <div class="mt-6 flex flex-wrap gap-3">
               <a
                 href="#install"
-                class="btn bg-gray-900 text-white dark:bg-white dark:text-gray-900 hover:opacity-95"
-                >Install</a
+                class="btn flex items-center gap-2 bg-gray-900 text-white dark:bg-white dark:text-gray-900 hover:opacity-95"
+              >
+                <svg
+                  class="w-5 h-5"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M12 3a1 1 0 0 1 1 1v8.586l2.293-2.293a1 1 0 1 1 1.414 1.414l-4 4a1 1 0 0 1-1.414 0l-4-4a1 1 0 1 1 1.414-1.414L11 12.586V4a1 1 0 0 1 1-1Z"
+                  />
+                  <path
+                    d="M5 20a2 2 0 0 1-2-2v-1a1 1 0 1 1 2 0v1h14v-1a1 1 0 1 1 2 0v1a2 2 0 0 1-2 2H5Z"
+                  />
+                </svg>
+                Install</a
               >
               <a
                 href="#playground"
-                class="btn border border-gray-300 dark:border-gray-700 hover:border-pink-400 dark:hover:border-pink-600"
-                >Playground</a
+                class="btn flex items-center gap-2 border border-gray-300 dark:border-gray-700 hover:border-pink-400 dark:hover:border-pink-600"
+              >
+                <svg
+                  class="w-5 h-5"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M8 5a3 3 0 0 0-3 3v8a1 1 0 1 0 2 0v-2h10v2a1 1 0 1 0 2 0V8a3 3 0 0 0-3-3H8Zm9 7H7V8a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v4Z"
+                  />
+                  <path
+                    d="M10.5 9.5v2.75a.75.75 0 0 0 1.125.65l2.25-1.375a.75.75 0 0 0 0-1.3l-2.25-1.375a.75.75 0 0 0-1.125.65Z"
+                  />
+                </svg>
+
+                Playground</a
               >
               <a
                 href="https://marketplace.visualstudio.com/items?itemName=EinfachAI.yapl"
                 target="_blank"
                 rel="noopener"
-                class="btn bg-gradient-to-r from-brand-500 to-rose-500 text-white shadow-glow hover:opacity-95 flex items-center gap-2"
+                class="btn flex items-center gap-2 bg-gradient-to-r from-brand-500 to-rose-500 text-white shadow-glow hover:opacity-95 flex items-center gap-2"
               >
+                <svg
+                  class="w-5 h-5"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M12 5c-1.657-1.104-3.843-2-6-2-1.105 0-2 .895-2 2v11c0 1.105.895 2 2 2 2.157 0 4.343.896 6 2 1.657-1.104 3.843-2 6-2 1.105 0 2-.895 2-2V5c0-1.105-.895-2-2-2-2.157 0-4.343.896-6 2zM6 6c1.99 0 3.98.66 6 2v9c-2.02-1.34-4.01-2-6-2V6zm12 0v9c-1.99 0-3.98.66-6 2V8c2.02-1.34 4.01-2 6-2z"
+                  />
+                </svg>
+
                 Documentation
               </a>
             </div>
@@ -310,7 +383,9 @@
               ><button class="copy-btn absolute right-3 top-3 text-xs rounded-lg px-2 py-1 border border-gray-700/30 hover:border-pink-500/60">Copy</button><code class="language-twig text-[13px]">
 {# AI Code Reviewer Template #}
 {% block system %}
-  You are an expert code reviewer with deep knowledge of {{ language | default("programming") }}.
+  You are an expert code reviewer 
+  with deep knowledge of 
+  {{ language | default("programming") }}.
 {% endblock %}
 
 {% block guidance %}
@@ -321,16 +396,11 @@
   {% endif %}
 {% endblock %}
 
-{% block prompt %}
-  Please review the following {{ language }} code:
-
-  ```{{ language }}
-    {{ code }}
-  ```
-
-  {% if focus_areas is defined %}
-    Pay special attention to: {{ focus_areas | join(", ") }}
-  {% endif %}
+{% block snippets %}
+  Review the following code snippets:
+  {% for snippet in snippets %}
+    {{ snippet }}
+  {% endfor %}
 {% endblock %}
             </code></pre>
             </div>
@@ -593,11 +663,11 @@
           href="https://marketplace.visualstudio.com/items?itemName=EinfachAI.yapl"
           target="_blank"
           rel="noopener"
-          class="group rounded-2xl border border-gray-200 dark:border-gray-800 bg-white/60 dark:bg-gray-900/40 p-6 flex items-center gap-4 hover:border-pink-400 dark:hover:border-pink-700"
+          class="group rounded-2xl border border-gray-200 dark:border-gray-800 bg-white/60 dark:bg-gray-900/40 p-6 flex items-center gap-4 hover:border-[#21aaf2] dark:hover:border-[#21aaf2]"
         >
           <img
             alt="YAPL VS Code icon"
-            class="w-14 h-14 rounded-xl shadow-glow"
+            class="w-14 h-14 rounded-xl"
             src="/vscode-logo.webp"
           />
           <div>
@@ -613,12 +683,12 @@
           href="https://marketplace.visualstudio.com/items?itemName=EinfachAI.yapl"
           target="_blank"
           rel="noopener"
-          class="group rounded-2xl border border-gray-200 dark:border-gray-800 bg-white/60 dark:bg-gray-900/40 p-6 flex items-center gap-4 hover:border-pink-400 dark:hover:border-pink-700"
+          class="group rounded-2xl border border-gray-200 dark:border-gray-800 bg-white/60 dark:bg-gray-900/40 p-6 flex items-center gap-4 hover:border-[#C260EE] dark:hover:border-[#C260EE]"
         >
           <img
             alt="YAPL VS Code icon"
-            class="w-14 h-14 rounded-xl shadow-glow"
-            src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256' viewBox='0 0 128 128'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%23f472b6'/%3E%3Cstop offset='1' stop-color='%23ec4899'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect rx='28' ry='28' width='128' height='128' fill='url(%23g)'/%3E%3Ctext x='64' y='86' text-anchor='middle' font-size='72' font-family='Inter,Arial,Helvetica,sans-serif' fill='white' font-weight='900'%3EY%3C/text%3E%3C/svg%3E"
+            class="w-14 h-14 rounded-xl"
+            src="/openvsx-logo.png"
           />
           <div>
             <div class="font-semibold">Install from Open VSX Registry</div>
@@ -656,6 +726,13 @@
             href="https://github.com/yapl-language/yapl.ts"
             class="hover:text-pink-600"
             >GitHub</a
+          >
+          <a
+            href="https://discord.gg/your-invite"
+            target="_blank"
+            rel="noopener"
+            class="hover:text-pink-600"
+            >Discord</a
           >
         </div>
       </div>
@@ -799,8 +876,8 @@
 
       // scrollspy
       const links = $$(".navlink");
-      const sections = ["why", "install", "examples", "playground", "faq"].map(
-        (id) => document.getElementById(id)
+      const sections = ["why", "install", "playground", "faq"].map((id) =>
+        document.getElementById(id)
       );
       const spObs = new IntersectionObserver(
         (entries) => {
