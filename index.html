@@ -115,6 +115,185 @@
         font-size: 0.9rem;
       }
     </style>
+
+    <!-- Sandpack theme overrides to support light/dark and match site palette -->
+    <style>
+      /* Base (light) theme for Sandpack */
+      html .sp-wrapper {
+        --sp-font-family: JetBrains Mono, ui-monospace, SFMono-Regular, Menlo,
+          monospace;
+        --sp-font-size: 12.5px;
+
+        /* Colors aligned with site (Tailwind gray + brand pinks) */
+        --sp-colors-fg: #111827; /* gray-900 */
+        --sp-colors-bg: #ffffff; /* white */
+        --sp-colors-surface1: #f8fafc; /* slate-50 */
+        --sp-colors-surface2: #f1f5f9; /* slate-100 */
+        --sp-colors-surface3: #e2e8f0; /* slate-200 */
+        --sp-colors-accent: #f472b6; /* brand-500 */
+        --sp-colors-clickable: #374151; /* gray-700 */
+        --sp-colors-disabled: #9ca3af; /* gray-400 */
+        --sp-colors-warning: #f59e0b; /* amber-500 */
+        --sp-colors-error: #ef4444; /* red-500 */
+        --sp-colors-success: #10b981; /* emerald-500 */
+
+        /* Syntax highlighting (CodeMirror) */
+        --sp-syntax-plain: #111827; /* plain text */
+        --sp-syntax-comment: #94a3b8; /* slate-400 */
+        --sp-syntax-constant: #9333ea; /* purple-600 */
+        --sp-syntax-entity: #2563eb; /* blue-600 */
+        --sp-syntax-keyword: #db2777; /* rose-600 */
+        --sp-syntax-storage: #db2777; /* rose-600 */
+        --sp-syntax-string: #16a34a; /* green-600 */
+        --sp-syntax-support: #2563eb; /* blue-600 */
+        --sp-syntax-variable: #ea580c; /* orange-600 */
+        --sp-syntax-punctuation: #334155; /* slate-700 */
+        --sp-syntax-operator: #0ea5e9; /* sky-500 */
+        --sp-syntax-function: #7c3aed; /* violet-600 */
+        --sp-syntax-class: #1d4ed8; /* blue-700 */
+        --sp-syntax-tag: #db2777; /* rose-600 */
+        --sp-syntax-attribute: #0284c7; /* sky-600 */
+        --sp-syntax-number: #b45309; /* amber-700 */
+        --sp-syntax-regexp: #059669; /* emerald-600 */
+        --sp-syntax-type: #0ea5e9; /* sky-500 */
+        --sp-syntax-builtin: #0ea5e9; /* sky-500 */
+        --sp-syntax-definition: #2563eb; /* blue-600 */
+        --sp-syntax-property: #0284c7; /* sky-600 */
+      }
+
+      /* Dark theme for Sandpack (follows html.dark set by the site toggle) */
+      .dark .sp-wrapper {
+        --sp-colors-fg: #e5e7eb; /* gray-200 */
+        --sp-colors-bg: #0b0f1a; /* deep background to blend with gray-950 */
+        --sp-colors-surface1: #0f172a; /* slate-900 */
+        --sp-colors-surface2: #111827; /* gray-900 */
+        --sp-colors-surface3: #1f2937; /* gray-800 */
+        --sp-colors-accent: #f472b6; /* brand-500 */
+        --sp-colors-clickable: #d1d5db; /* gray-300 */
+        --sp-colors-disabled: #6b7280; /* gray-500 */
+        --sp-colors-warning: #f59e0b; /* amber-500 */
+        --sp-colors-error: #f87171; /* red-400 */
+        --sp-colors-success: #34d399; /* emerald-400 */
+
+        --sp-syntax-plain: #e5e7eb; /* plain text */
+        --sp-syntax-comment: #9ca3af; /* gray-400/500 */
+        --sp-syntax-constant: #c084fc; /* purple-400 */
+        --sp-syntax-entity: #93c5fd; /* blue-300 */
+        --sp-syntax-keyword: #fb7185; /* rose-400 */
+        --sp-syntax-storage: #fb7185; /* rose-400 */
+        --sp-syntax-string: #4ade80; /* green-400 */
+        --sp-syntax-support: #93c5fd; /* blue-300 */
+        --sp-syntax-variable: #fdba74; /* orange-300 */
+        --sp-syntax-punctuation: #9ca3af; /* gray-400 */
+        --sp-syntax-operator: #7dd3fc; /* sky-300 */
+        --sp-syntax-function: #c084fc; /* purple-400 */
+        --sp-syntax-class: #93c5fd; /* blue-300 */
+        --sp-syntax-tag: #fb7185; /* rose-400 */
+        --sp-syntax-attribute: #7dd3fc; /* sky-300 */
+        --sp-syntax-number: #fbbf24; /* amber-400 */
+        --sp-syntax-regexp: #34d399; /* emerald-400 */
+        --sp-syntax-type: #7dd3fc; /* sky-300 */
+        --sp-syntax-builtin: #7dd3fc; /* sky-300 */
+        --sp-syntax-definition: #93c5fd; /* blue-300 */
+        --sp-syntax-property: #7dd3fc; /* sky-300 */
+      }
+
+      /* Blend Sandpack surfaces and borders with the site's cards */
+      .sp-layout,
+      .sp-code-editor,
+      .sp-tabs,
+      .sp-console,
+      .sp-preview {
+        border-radius: 12px;
+        border: 1px solid rgba(148, 163, 184, 0.25); /* slate-400 @ 25% */
+        background: var(--sp-colors-surface1);
+        color: var(--sp-colors-fg);
+      }
+      .dark .sp-layout,
+      .dark .sp-code-editor,
+      .dark .sp-tabs,
+      .dark .sp-console,
+      .dark .sp-preview {
+        border-color: rgba(31, 41, 55, 0.9); /* gray-800 */
+      }
+
+      /* Active tab accent matches brand */
+      html .sp-wrapper {
+        color: var(--sp-colors-fg);
+      }
+      .sp-tabs .sp-tab-button--active {
+        color: var(--sp-colors-accent);
+      }
+      .sp-tabs .sp-tab-button,
+      .sp-button {
+        color: var(--sp-colors-fg);
+      }
+      .sp-tab-button {
+        border-radius: 8px;
+      }
+      .sp-tabs .sp-tab-button--active {
+        background: color-mix(
+          in oklab,
+          var(--sp-colors-accent) 18%,
+          transparent
+        );
+      }
+      .dark .sp-tabs .sp-tab-button--active {
+        background: color-mix(
+          in oklab,
+          var(--sp-colors-accent) 22%,
+          transparent
+        );
+      }
+      .sp-tab-button:focus-visible {
+        outline: 2px solid
+          color-mix(in oklab, var(--sp-colors-accent) 60%, transparent);
+      }
+      .sp-code-editor pre,
+      .sp-code-editor code {
+        color: var(--sp-colors-fg) !important;
+      }
+
+      /* Ensure CodeMirror picks up our vars immediately */
+      .cm-editor {
+        background: var(--sp-colors-surface1) !important;
+        color: var(--sp-syntax-plain, var(--sp-colors-fg)) !important;
+      }
+      .cm-scroller {
+        color: var(--sp-syntax-plain, var(--sp-colors-fg)) !important;
+      }
+      .cm-gutters {
+        background: var(--sp-colors-surface2) !important;
+        border-right-color: rgba(148, 163, 184, 0.2) !important;
+        color: var(--sp-syntax-plain, var(--sp-colors-fg)) !important;
+      }
+      .cm-content {
+        color: var(--sp-syntax-plain, var(--sp-colors-fg)) !important;
+      }
+      .cm-line {
+        color: var(--sp-syntax-plain, var(--sp-colors-fg)) !important;
+      }
+      .cm-cursor,
+      .cm-dropCursor {
+        border-left-color: var(--sp-colors-fg) !important;
+      }
+
+      /* Make focus/selection align with brand */
+      .cm-selectionBackground,
+      .cm-content ::selection {
+        background: color-mix(
+          in srgb,
+          var(--sp-colors-accent) 30%,
+          transparent
+        );
+      }
+      .sp-button:focus-visible,
+      .sp-tab-button:focus-visible {
+        outline: 2px solid
+          color-mix(in srgb, var(--sp-colors-accent) 60%, transparent);
+        outline-offset: 2px;
+      }
+    </style>
   </head>
 
   <body
@@ -136,10 +315,6 @@
             <span
               class="text-lg font-extrabold tracking-tight bg-gradient-to-r from-pink-600 to-rose-500 bg-clip-text text-transparent"
               >YAPL</span
-            >
-            <span
-              class="ml-2 text-xs px-2 py-0.5 rounded-full bg-pink-100 text-pink-800 dark:bg-pink-900/40 dark:text-pink-100 border border-pink-200/60 dark:border-pink-800/60"
-              >Yet Another Prompt Language</span
             >
           </a>
 
@@ -274,7 +449,7 @@
     <!-- Hero -->
     <section id="get-started" class="relative">
       <div class="mx-auto max-w-7xl px-4 py-16 sm:py-20">
-        <div class="grid md:grid-cols-2 gap-10 items-center">
+        <div class="grid md:grid-cols-2 gap-10 items-start h-[570px]">
           <div>
             <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">
               A tiny,
@@ -371,38 +546,100 @@
               class="relative rounded-2xl border border-white/60 dark:border-gray-800 bg-white/70 dark:bg-gray-900/50 backdrop-blur p-4 shadow-glow"
             >
               <div class="flex items-center justify-between px-3 py-2">
-                <div class="flex items-center gap-2">
-                  <span class="w-3 h-3 rounded-full bg-rose-400"></span>
-                  <span class="w-3 h-3 rounded-full bg-pink-400"></span>
-                  <span class="w-3 h-3 rounded-full bg-fuchsia-400"></span>
+                <div class="flex items-center gap-3">
+                  <div class="flex items-center gap-1.5">
+                    <span class="w-3 h-3 rounded-full bg-rose-400"></span>
+                    <span class="w-3 h-3 rounded-full bg-pink-400"></span>
+                    <span class="w-3 h-3 rounded-full bg-fuchsia-400"></span>
+                  </div>
+                  <div
+                    class="inline-flex rounded-lg border border-gray-200 dark:border-gray-800 overflow-hidden"
+                  >
+                    <button
+                      class="code-tab px-3 py-1.5 text-xs font-semibold bg-pink-100 text-pink-900 dark:bg-pink-900/30 dark:text-pink-100"
+                      data-code="json"
+                      aria-selected="true"
+                    >
+                      JSON
+                    </button>
+                    <button
+                      class="code-tab px-3 py-1.5 text-xs font-semibold hover:bg-gray-100 dark:hover:bg-gray-800"
+                      data-code="markdown"
+                    >
+                      Markdown
+                    </button>
+                    <button
+                      class="code-tab px-3 py-1.5 text-xs font-semibold hover:bg-gray-100 dark:hover:bg-gray-800"
+                      data-code="text"
+                    >
+                      Text
+                    </button>
+                  </div>
                 </div>
-                <span class="text-xs text-gray-500">hello.yapl</span>
+                <span id="codeTitle" class="text-xs text-gray-500"
+                  >hello.json.yapl</span
+                >
               </div>
-              <pre
-                class="relative"
-              ><button class="copy-btn absolute right-3 top-3 text-xs rounded-lg px-2 py-1 border border-gray-700/30 hover:border-pink-500/60">Copy</button><code class="language-twig text-[13px]">
-{# AI Code Reviewer Template #}
-{% block system %}
-  You are an expert code reviewer 
-  with deep knowledge of 
-  {{ language | default("programming") }}.
-{% endblock %}
+              <div class="mt-2">
+                <pre
+                  class="relative codepanel"
+                  data-code="json"
+                ><button class="copy-btn absolute right-3 top-3 text-xs rounded-lg px-2 py-1 border border-gray-700/30 hover:border-pink-500/60">Copy</button><code class="language-json text-[13px]">{
+"blocks": {
+  "system": "You are an expert code reviewer with deep knowledge of {{ language | default(\"programming\") }}.",
+  "guidance": [
+      "Focus on code quality, security, and best practices",
+      "Provide specific, actionable feedback",
+      {% if experience_level == \"junior\" %}
+        "Explain the reasoning behind your suggestions"
+      {% endif %}
+  ],
+  "snippets": [
+    {% for snippet in snippets %}
+      {
+        {{ snippet }}
+      }
+    {% endfor %}"
+  ]
+}</code></pre>
 
-{% block guidance %}
-  - Focus on code quality, security, and best practices
-  - Provide specific, actionable feedback
-  {% if experience_level == "junior" %}
-    - Explain the reasoning behind your suggestions
-  {% endif %}
-{% endblock %}
+                <pre
+                  class="relative codepanel hidden"
+                  data-code="markdown"
+                ><button class="copy-btn absolute right-3 top-3 text-xs rounded-lg px-2 py-1 border border-gray-700/30 hover:border-pink-500/60">Copy</button><code class="language-markdown text-[13px]">### System
+You are an expert code reviewer with deep knowledge of {{ language | default("programming") }}.
 
-{% block snippets %}
+### Guidance
+- Focus on code quality, security, and best practices
+- Provide specific, actionable feedback
+{% if experience_level == "junior" %}
+  - Explain the reasoning behind your suggestions
+{% endif %}
+
+### Snippets
+Review the following code snippets:
+{% for snippet in snippets %}
+  {{ snippet }}
+{% endfor %}</code></pre>
+
+                <pre
+                  class="relative codepanel hidden"
+                  data-code="text"
+                ><button class="copy-btn absolute right-3 top-3 text-xs rounded-lg px-2 py-1 border border-gray-700/30 hover:border-pink-500/60">Copy</button><code class="language-none text-[13px]">SYSTEM:
+You are an expert code reviewer with deep knowledge of {{ language | default("programming") }}.
+
+GUIDANCE:
+- Focus on code quality, security, and best practices
+- Provide specific, actionable feedback
+{% If experience_level == "junior" %}
+  Explain the reasoning behind your suggestions
+{% endif %}
+  SNIPPETS:
   Review the following code snippets:
-  {% for snippet in snippets %}
-    {{ snippet }}
-  {% endfor %}
-{% endblock %}
-            </code></pre>
+{% for snippet in snippets %}
+  {{ snippet }}
+{% endfor %}</code></pre>
+              </div>
             </div>
           </div>
         </div>
@@ -440,7 +677,7 @@
           </p>
         </div>
         <div
-          class="rounded-2xl border border-gray-200 dark:border-gray-800 p--6 bg-white/60 dark:bg-gray-900/40"
+          class="rounded-2xl border border-gray-200 dark:border-gray-800 p-6 bg-white/60 dark:bg-gray-900/40"
         >
           <div
             class="w-10 h-10 grid place-items-center rounded-lg bg-pink-100 text-pink-700 dark:bg-pink-900/30 dark:text-pink-200 mb-3"
@@ -985,6 +1222,48 @@
       document.getElementById("resetVars")?.addEventListener("click", () => {
         $("#vars").value = DEFAULT_VARS;
       });
+      // code tabs for hero
+      const codeTabs = $$(".code-tab");
+      const codePanels = $$(".codepanel");
+      const codeTitleEl = $("#codeTitle");
+      const extMap = { json: "json", markdown: "md", text: "txt" };
+      codeTabs.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const name = btn.dataset.code;
+          codeTabs.forEach((b) =>
+            b.classList.remove(
+              "bg-pink-100",
+              "text-pink-900",
+              "dark:bg-pink-900/30",
+              "dark:text-pink-100"
+            )
+          );
+          btn.classList.add(
+            "bg-pink-100",
+            "text-pink-900",
+            "dark:bg-pink-900/30",
+            "dark:text-pink-100"
+          );
+          codePanels.forEach((p) =>
+            p.classList.toggle("hidden", p.dataset.code !== name)
+          );
+          if (codeTitleEl)
+            codeTitleEl.textContent = `hello.${extMap[name] || name}.yapl`;
+          // re-highlight visible panel
+          const active = codePanels.find(
+            (p) => !p.classList.contains("hidden")
+          );
+          if (active && window.Prism) {
+            const code = active.querySelector("code");
+            if (code) Prism.highlightElement(code);
+          }
+        });
+      });
+      // highlight default visible
+      (function () {
+        const active = document.querySelector(".codepanel:not(.hidden) code");
+        if (active && window.Prism) Prism.highlightElement(active);
+      })();
     </script>
   </body>
 </html>

@@ -5,6 +5,7 @@ import {
   SandpackCodeEditor,
   useSandpack,
 } from "@codesandbox/sandpack-react";
+import { yaplExtension } from "./yapl-codemirror";
 import { YAPL } from "@yapl-language/yapl.ts";
 
 const INITIAL_FILES = {
@@ -108,24 +109,25 @@ function PlaygroundContent({
 
   return (
     <SandpackLayout>
-      <div style={{ flex: 1, minWidth: 0 }}>
+      <div style={{ flex: 1, minWidth: 0 }} className="p-2 pt-4">
         <SandpackCodeEditor
           showLineNumbers
           showInlineErrors
           wrapContent
+          extensions={[yaplExtension()]}
           style={{ height: 380, borderRadius: 12 }}
         />
       </div>
-      <div style={{ width: 360 }} className="p-2 flex flex-col gap-2">
-        <label className="text-sm font-medium">Variables (JSON)</label>
-        <textarea
+      <div style={{ width: 360, minHeight: 380 }} className="p-2 pt-4 flex flex-col gap-2">
+        <label className="text-sm font-medium h-9 flex items-center">Variables (JSON)</label>
+        <textarea style={{ flex: 1, minHeight: 0 }}
           value={varsText}
           onChange={(e) => setVarsText(e.target.value)}
           rows={10}
-          className="w-full rounded border border-gray-300 dark:border-gray-700 bg-transparent p-2 text-sm font-mono"
+          className="w-full rounded border border-gray-300 dark:border-gray-700 bg-white/70 dark:bg-gray-900/60 text-gray-900 dark:text-gray-100 p-2 text-sm font-mono"
         />
         <button
-          className="btn border border-gray-300 dark:border-gray-700 hover:border-pink-400 dark:hover:border-pink-600"
+          className="btn mt-auto bg-gradient-to-r from-brand-500 to-rose-500 text-white shadow-glow hover:opacity-95 border border-transparent"
           onClick={async () => {
             await renderNow();
           }}
@@ -171,6 +173,101 @@ export default function YaplPlayground() {
     });
     window.__YAPL_VFS = vfs;
   }, []);
+
+  // Keep Sandpack theme in sync with the site theme (html.dark)
+  const [themeMode, setThemeMode] = useState(() =>
+    typeof document !== "undefined" && document.documentElement.classList.contains("dark")
+      ? "dark"
+      : "light"
+  );
+  useEffect(() => {
+    const el = document.documentElement;
+    const obs = new MutationObserver(() => {
+      setThemeMode(el.classList.contains("dark") ? "dark" : "light");
+    });
+    obs.observe(el, { attributes: true, attributeFilter: ["class"] });
+    const mql = window.matchMedia("(prefers-color-scheme: dark)");
+    const onChange = () => setThemeMode(document.documentElement.classList.contains("dark") ? "dark" : "light");
+    mql.addEventListener("change", onChange);
+    return () => {
+      obs.disconnect();
+      mql.removeEventListener("change", onChange);
+    };
+  }, []);
+
+  const lightTheme = {
+    colors: {
+      surface1: "#f8fafc",
+      surface2: "#f1f5f9",
+      surface3: "#e2e8f0",
+      base: "#111827",
+      clickable: "#374151",
+      disabled: "#9ca3af",
+      accent: "#f472b6",
+      error: "#ef4444",
+      errorSurface: "#fee2e2",
+      warning: "#f59e0b",
+      warningSurface: "#fef3c7",
+      success: "#10b981",
+      successSurface: "#d1fae5",
+    },
+    syntax: {
+      plain: "#111827",
+      comment: "#64748b",
+      punctuation: "#334155",
+      keyword: "#db2777",
+      tag: "#db2777",
+      string: "#16a34a",
+      number: "#b45309",
+      operator: "#0ea5e9",
+      function: "#7c3aed",
+      variable: "#ea580c",
+      definition: "#2563eb",
+      property: "#0284c7",
+    },
+    typography: {
+      fontSize: "12.5px",
+      fontFamily: "JetBrains Mono, ui-monospace, SFMono-Regular, Menlo, monospace",
+    },
+  };
+
+  const darkTheme = {
+    colors: {
+      surface1: "#0f172a",
+      surface2: "#111827",
+      surface3: "#1f2937",
+      base: "#e5e7eb",
+      clickable: "#d1d5db",
+      disabled: "#6b7280",
+      accent: "#f472b6",
+      error: "#f87171",
+      errorSurface: "#451a1a",
+      warning: "#f59e0b",
+      warningSurface: "#451a03",
+      success: "#34d399",
+      successSurface: "#052e1b",
+    },
+    syntax: {
+      plain: "#e5e7eb",
+      comment: "#9ca3af",
+      punctuation: "#94a3b8",
+      keyword: "#fb7185",
+      tag: "#fb7185",
+      string: "#4ade80",
+      number: "#fbbf24",
+      operator: "#7dd3fc",
+      function: "#c084fc",
+      variable: "#fdba74",
+      definition: "#93c5fd",
+      property: "#7dd3fc",
+    },
+    typography: {
+      fontSize: "12.5px",
+      fontFamily: "JetBrains Mono, ui-monospace, SFMono-Regular, Menlo, monospace",
+    },
+  };
+
+  const currentTheme = themeMode === "dark" ? darkTheme : lightTheme;
 
   const renderNow = async () => {
     // Ensure VFS is initialized and contains all initial files
@@ -265,6 +362,7 @@ export default function YaplPlayground() {
       <SandpackProvider
         template="vanilla"
         files={files}
+        theme={currentTheme}
         options={{
           visibleFiles: Object.keys(INITIAL_FILES),
           activeFile: "/prompts/examples/conditional-agent.md.yapl",
