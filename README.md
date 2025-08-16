@@ -1,4 +1,4 @@
-# <img src="icon.png" alt="YAPL" width="28" height="28" /> YAPL Website
+# <img src="https://raw.githubusercontent.com/yapl-language/yapl-vscode/refs/heads/main/images/icon.png" alt="YAPL" width="28" height="28" /> YAPL Website
 
 <p align="left">
 	<a href="https://yapl-language.github.io" style="font-size:2rem; font-weight:bold; display:inline-block; margin: 0.5em 0;">
