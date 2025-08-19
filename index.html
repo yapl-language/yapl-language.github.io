@@ -456,9 +456,9 @@
 
     <!-- Hero -->
     <section id="get-started" class="relative">
-      <div class="mx-auto max-w-7xl px-4 py-16 sm:py-20">
-        <div class="grid md:grid-cols-2 gap-10 items-start h-[570px]">
-          <div>
+      <div class="mx-auto max-w-7xl px-4 py-8 md:py-16">
+        <div class="grid md:grid-cols-2 gap-10 items-start md:min-h-[570px]">
+          <div class="max-w-xl w-full mx-auto md:mx-0">
             <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">
               A tiny,
               <span
@@ -478,7 +478,9 @@
               inject <strong>variables</strong> seamlessly. Write less, reuse
               more — because the future of agents deserves better prompts.
             </p>
-            <div class="mt-6 flex flex-wrap gap-3">
+            <div
+              class="mt-6 flex flex-wrap gap-3 justify-center md:justify-start"
+            >
               <a
                 href="#install"
                 class="btn flex items-center gap-2 bg-gray-900 text-white dark:bg-white dark:text-gray-900 hover:opacity-95"
@@ -546,14 +548,18 @@
             </div>
           </div>
 
-          <div class="relative">
+          <div
+            class="relative overflow-hidden max-w-xl w-full mx-auto md:max-w-none md:mx-0"
+          >
             <div
               class="absolute -inset-3 rounded-3xl bg-gradient-to-tr from-pink-500/20 via-fuchsia-500/20 to-rose-500/20 blur-2xl"
             ></div>
             <div
               class="relative rounded-2xl border border-white/60 dark:border-gray-800 bg-white/70 dark:bg-gray-900/50 backdrop-blur p-4 shadow-glow"
             >
-              <div class="flex items-center justify-between px-3 py-2">
+              <div
+                class="flex flex-wrap md:flex-nowrap items-center justify-between gap-2 px-3 py-2"
+              >
                 <div class="flex items-center gap-3">
                   <div class="flex items-center gap-1.5">
                     <span class="w-3 h-3 rounded-full bg-rose-400"></span>
@@ -584,15 +590,15 @@
                     </button>
                   </div>
                 </div>
-                <span id="codeTitle" class="text-xs text-gray-500"
+                <span id="codeTitle" class="text-xs text-gray-500 truncate"
                   >hello.json.yapl</span
                 >
               </div>
               <div class="mt-2">
                 <pre
-                  class="relative codepanel"
+                  class="relative codepanel overflow-x-auto"
                   data-code="json"
-                ><button class="copy-btn absolute right-3 top-3 text-xs rounded-lg px-2 py-1 border border-gray-700/30 hover:border-pink-500/60">Copy</button><code class="language-json text-[13px]">{
+                ><button class="copy-btn absolute right-3 top-3 text-xs rounded-lg px-2 py-1 border border-gray-700/30 hover:border-pink-500/60">Copy</button><code class="language-json text-[12px] sm:text-[13px]">{
 "blocks": {
   "system": "You are an expert code reviewer with deep knowledge of {{ language | default(\"programming\") }}.",
   "guidance": [
@@ -612,9 +618,9 @@
 }</code></pre>
 
                 <pre
-                  class="relative codepanel hidden"
+                  class="relative codepanel hidden overflow-x-auto"
                   data-code="markdown"
-                ><button class="copy-btn absolute right-3 top-3 text-xs rounded-lg px-2 py-1 border border-gray-700/30 hover:border-pink-500/60">Copy</button><code class="language-markdown text-[13px]">### System
+                ><button class="copy-btn absolute right-3 top-3 text-xs rounded-lg px-2 py-1 border border-gray-700/30 hover:border-pink-500/60">Copy</button><code class="language-markdown text-[12px] sm:text-[13px]">### System
 You are an expert code reviewer with deep knowledge of {{ language | default("programming") }}.
 
 ### Guidance
@@ -631,9 +637,9 @@ Review the following code snippets:
 {% endfor %}</code></pre>
 
                 <pre
-                  class="relative codepanel hidden"
+                  class="relative codepanel hidden overflow-x-auto"
                   data-code="text"
-                ><button class="copy-btn absolute right-3 top-3 text-xs rounded-lg px-2 py-1 border border-gray-700/30 hover:border-pink-500/60">Copy</button><code class="language-none text-[13px]">SYSTEM:
+                ><button class="copy-btn absolute right-3 top-3 text-xs rounded-lg px-2 py-1 border border-gray-700/30 hover:border-pink-500/60">Copy</button><code class="language-none text-[12px] sm:text-[13px]">SYSTEM:
 You are an expert code reviewer with deep knowledge of {{ language | default("programming") }}.
 
 GUIDANCE:
